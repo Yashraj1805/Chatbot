@@ -1,33 +1,19 @@
-// Pilot waitlist capture — sends sign-up details to a Google Apps Script Web App
-// that appends them as a row in a Google Sheet. No backend server needed.
+// Pilot signup capture — posts to our own Vercel serverless function
+// (`/api/lead`), which stores the signup in Postgres and optionally emails a
+// notification. Same-origin, so no CORS workarounds needed.
 //
-// Set the endpoint in an env var (Vercel → Project → Settings → Environment
-// Variables, and a local .env for dev):
-//   VITE_WAITLIST_ENDPOINT=https://script.google.com/macros/s/XXXX/exec
-//
-// If the var is unset, capture is skipped gracefully (the form still works).
-const ENDPOINT = import.meta.env.VITE_WAITLIST_ENDPOINT
+// Locally (`npm run dev`) the /api route doesn't run, so this fails quietly and
+// the form still proceeds. Use `vercel dev` to exercise the function locally.
+const ENDPOINT = '/api/lead'
 
 export async function saveLead(data) {
-  if (!ENDPOINT) {
-    // No endpoint configured yet — don't block the user, just log in dev.
-    if (import.meta.env.DEV) console.warn('[waitlist] VITE_WAITLIST_ENDPOINT not set — skipped:', data)
-    return { ok: false, skipped: true }
-  }
-
-  const payload = { source: 'web', ...data, ts: new Date().toISOString() }
-
   try {
-    // `no-cors` + text/plain keeps it a "simple request" so the browser doesn't
-    // block it — Apps Script accepts the POST and writes the row. The response
-    // is opaque (can't be read), so we treat a completed request as success.
-    await fetch(ENDPOINT, {
+    const res = await fetch(ENDPOINT, {
       method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ source: 'web', ...data }),
     })
-    return { ok: true }
+    return { ok: res.ok }
   } catch (err) {
     if (import.meta.env.DEV) console.error('[waitlist] save failed:', err)
     return { ok: false, error: err }
