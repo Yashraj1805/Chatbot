@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Private app areas (no SEO value)
+Disallow: /app/
+Disallow: /admin/
+Disallow: /agent/
+Disallow: /login
+Disallow: /register
+
+Sitemap: https://vartabot.in/sitemap.xml

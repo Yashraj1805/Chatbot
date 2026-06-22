@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0d8983" />
+    <meta
+      name="description"
+      content="VartaBot — build, manage, and deploy no-code rule-based chatbots that capture leads and answer visitors 24/7."
+    />
+
+    <!-- Open Graph / social share -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="VartaBot" />
+    <meta property="og:title" content="VartaBot — No-Code Chatbot Platform" />
+    <meta
+      property="og:description"
+      content="Build no-code rule-based chatbots that capture leads and answer visitors 24/7. Live in minutes — no developer needed."
+    />
+    <meta property="og:image" content="/og-image.svg" />
+    <meta property="og:url" content="https://vartabot.in" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="VartaBot — No-Code Chatbot Platform" />
+    <meta
+      name="twitter:description"
+      content="Build no-code chatbots that capture leads and answer visitors 24/7."
+    />
+    <meta name="twitter:image" content="/og-image.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <title>VartaBot — No-Code Chatbot Platform</title>
+
+    <!-- Structured data for rich results -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://vartabot.in/#org",
+            "name": "VartaBot",
+            "url": "https://vartabot.in",
+            "logo": "https://vartabot.in/favicon.svg",
+            "email": "hello@vartabot.in",
+            "sameAs": ["https://twitter.com/vartabot"]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://vartabot.in/#website",
+            "url": "https://vartabot.in",
+            "name": "VartaBot",
+            "publisher": { "@id": "https://vartabot.in/#org" }
+          },
+          {
+            "@type": "SoftwareApplication",
+            "name": "VartaBot",
+            "applicationCategory": "BusinessApplication",
+            "operatingSystem": "Web",
+            "description": "No-code platform to build chatbots that capture leads and answer visitors 24/7.",
+            "offers": {
+              "@type": "Offer",
+              "price": "29",
+              "priceCurrency": "USD"
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.9",
+              "ratingCount": "1200"
+            }
+          }
+        ]
+      }
+    </script>
+
+    <script>
+      // Apply persisted theme before paint to avoid a flash of the wrong theme
+      (function () {
+        try {
+          const stored = localStorage.getItem('vartabot-theme')
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+          if (stored === 'dark' || (!stored && prefersDark)) {
+            document.documentElement.classList.add('dark')
+          }
+        } catch (e) {}
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
