@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from 'react'
 import { X, Send, Sparkles } from 'lucide-react'
 import { LogoGlyph } from './Logo.jsx'
 
-// Site-wide AI helper. Answers product questions from a local knowledge base.
-// To wire a real model later, replace `localAnswer()` with an API call to your
-// LLM endpoint (e.g. Claude) — the UI already handles async + typing state.
+// Site-wide AI helper. Talks to our serverless function (/api/assistant, backed
+// by Gemini) for real answers, and falls back to a local knowledge base if the
+// API is unavailable (e.g. local `npm run dev`, or no key configured).
 const KB = [
   {
     keys: ['price', 'pricing', 'cost', 'plan', 'how much', 'expensive'],
@@ -98,17 +98,30 @@ export default function AIAssistant() {
     dismissNudge()
   }
 
-  const send = (text) => {
+  const send = async (text) => {
     const value = (text ?? input).trim()
     if (!value) return
+    // Snapshot history (before adding this message) for the model's context.
+    const history = messages.slice(-8)
     setMessages((m) => [...m, { from: 'user', text: value }])
     setInput('')
     setTyping(true)
-    const reply = localAnswer(value)
-    setTimeout(() => {
-      setTyping(false)
-      setMessages((m) => [...m, { from: 'bot', text: reply }])
-    }, 750)
+
+    let reply
+    try {
+      const res = await fetch('/api/assistant', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: value, history }),
+      })
+      const data = await res.json()
+      reply = res.ok && data.reply ? data.reply : localAnswer(value)
+    } catch (e) {
+      reply = localAnswer(value)
+    }
+
+    setTyping(false)
+    setMessages((m) => [...m, { from: 'bot', text: reply }])
   }
 
   return (
