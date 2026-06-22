@@ -1,8 +1,10 @@
 // Vercel Serverless Function — powers the site's "Ask AI" assistant with
-// Google Gemini. The API key stays here on the server (GEMINI_API_KEY); it is
-// never sent to the browser. Configure via Vercel env vars:
-//   GEMINI_API_KEY — your Gemini API key (from aistudio.google.com)  [required]
-//   GEMINI_MODEL   — model id (default: gemini-2.0-flash)            [optional]
+// Anthropic's Claude (Messages API). The API key stays here on the server
+// (ANTHROPIC_API_KEY); it is never sent to the browser. Configure via Vercel
+// env vars:
+//   ANTHROPIC_API_KEY — your Claude API key (from console.anthropic.com)  [required]
+//   ANTHROPIC_MODEL   — model id (default: claude-haiku-4-5, the cheapest;
+//                       use claude-sonnet-4-6 / claude-opus-4-8 for more depth) [optional]
 
 const SYSTEM_PROMPT = `You are "VartaBot AI", the friendly assistant on VartaBot's website.
 VartaBot is a no-code chatbot platform that lets businesses build chatbots and capture leads — live in minutes, no developer needed.
@@ -27,14 +29,15 @@ HOW TO ANSWER:
 - Be warm, encouraging, and genuinely helpful — like a great salesperson who wants the customer to succeed.
 - Explain clearly in simple, jargon-free language; focus on the benefit to the customer, not just the feature.
 - Keep it concise (2-4 sentences). When helpful, end with a gentle next step or question (e.g. start the free trial, visit pricing, join the pilot).
-- Reply in the user's language (English or Hindi/Hinglish), matching their tone.`
+- Reply in the user's language (English or Hindi/Hinglish), matching their tone.
+- Respond with only your final answer — no preamble, no reasoning out loud.`
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ ok: false, error: 'Method not allowed' })
   }
 
-  const apiKey = process.env.GEMINI_API_KEY
+  const apiKey = process.env.ANTHROPIC_API_KEY
   if (!apiKey) {
     return res.status(503).json({ ok: false, error: 'Assistant not configured' })
   }
@@ -50,38 +53,46 @@ export default async function handler(req, res) {
 
   // Build conversation: last few turns of history + the new message.
   const history = Array.isArray(body.history) ? body.history.slice(-8) : []
-  const contents = [
+  const messages = [
     ...history
       .filter((m) => m && m.text)
       .map((m) => ({
-        role: m.from === 'user' ? 'user' : 'model',
-        parts: [{ text: String(m.text).slice(0, 1000) }],
+        role: m.from === 'user' ? 'user' : 'assistant',
+        content: String(m.text).slice(0, 1000),
       })),
-    { role: 'user', parts: [{ text: message }] },
+    { role: 'user', content: message },
   ]
 
-  const model = process.env.GEMINI_MODEL || 'gemini-2.0-flash'
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`
+  const model = process.env.ANTHROPIC_MODEL || 'claude-haiku-4-5'
 
   try {
-    const r = await fetch(url, {
+    const r = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'content-type': 'application/json',
+      },
       body: JSON.stringify({
-        system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-        contents,
-        generationConfig: { temperature: 0.6, maxOutputTokens: 400 },
+        model,
+        max_tokens: 400,
+        system: SYSTEM_PROMPT,
+        messages,
       }),
     })
 
     if (!r.ok) {
       const detail = await r.text()
-      console.error('[assistant] Gemini error', r.status, detail)
+      console.error('[assistant] Claude error', r.status, detail)
       return res.status(502).json({ ok: false, error: 'Upstream error' })
     }
 
     const data = await r.json()
-    const reply = data?.candidates?.[0]?.content?.parts?.map((p) => p.text).join('').trim()
+    const reply = (data?.content || [])
+      .filter((b) => b.type === 'text')
+      .map((b) => b.text)
+      .join('')
+      .trim()
 
     if (!reply) return res.status(502).json({ ok: false, error: 'Empty reply' })
     return res.status(200).json({ ok: true, reply })
