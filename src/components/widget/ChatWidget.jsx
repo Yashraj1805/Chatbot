@@ -3,6 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { X, Send, Smile } from 'lucide-react'
 import { cn } from '../../utils/cn.js'
 import { LogoGlyph } from '../Logo.jsx'
+import { saveLead } from '../../lib/waitlist.js'
+
+const EMAIL_RE = /[^\s@]+@[^\s@]+\.[^\s@]+/
 
 const BUBBLE_IN = {
   initial: { opacity: 0, y: 10, scale: 0.96 },
@@ -29,6 +32,7 @@ export default function ChatWidget({
   const [input, setInput] = useState('')
   const [typing, setTyping] = useState(false)
   const scrollRef = useRef(null)
+  const capturedRef = useRef(false)
 
   // Reset the conversation whenever the configured welcome message changes
   useEffect(() => {
@@ -39,18 +43,38 @@ export default function ChatWidget({
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' })
   }, [messages, typing])
 
-  const send = (text) => {
+  const send = async (text) => {
     const value = (text ?? input).trim()
     if (!value) return
+    const history = messages.slice(-8)
     setMessages((m) => [...m, { from: 'user', text: value }])
     setInput('')
     setTyping(true)
-    // Mock rule-based reply (context-aware — sees the prior bot message)
-    const reply = mockReply(value, messages)
-    setTimeout(() => {
-      setTyping(false)
-      setMessages((m) => [...m, { from: 'bot', text: reply }])
-    }, 900)
+
+    // If the visitor shares an email, capture it as a lead (once per session).
+    const email = value.match(EMAIL_RE)?.[0]
+    if (email && !capturedRef.current) {
+      capturedRef.current = true
+      saveLead({ source: 'widget', email })
+    }
+
+    // Real answer from Claude; fall back to the local mock reply if the API
+    // is unavailable (e.g. local `npm run dev`, or no key configured).
+    let reply
+    try {
+      const res = await fetch('/api/assistant', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: value, history }),
+      })
+      const data = await res.json()
+      reply = res.ok && data.reply ? data.reply : mockReply(value, history)
+    } catch (e) {
+      reply = mockReply(value, history)
+    }
+
+    setTyping(false)
+    setMessages((m) => [...m, { from: 'bot', text: reply }])
   }
 
   const panel = (
