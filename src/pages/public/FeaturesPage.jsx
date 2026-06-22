@@ -117,7 +117,7 @@ export default function FeaturesPage() {
         </div>
 
         <div className="mt-12 text-center">
-          <Button as={Link} to="/register" size="lg">Start building free</Button>
+          <Button as={Link} to="/join" size="lg">Start building free</Button>
           <p className="mt-3 text-sm text-surface-500">14-day free trial · no credit card</p>
         </div>
       </section>

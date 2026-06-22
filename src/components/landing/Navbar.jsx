@@ -58,13 +58,10 @@ export default function Navbar() {
 
         <div className="hidden items-center gap-2 md:flex">
           <ThemeToggle />
-          <Button as={Link} to="/login" variant="ghost" size="sm">
-            Log in
-          </Button>
           <Button as={Link} to="/#pricing" variant="secondary" size="sm">
             Book a demo
           </Button>
-          <Button as={Link} to="/register" size="sm">
+          <Button as={Link} to="/join" size="sm">
             Start free
           </Button>
         </div>
@@ -102,13 +99,10 @@ export default function Navbar() {
               About
             </Link>
             <div className="mt-2 flex flex-col gap-2">
-              <Button as={Link} to="/login" variant="ghost">
-                Log in
-              </Button>
               <Button as={Link} to="/#pricing" variant="secondary" onClick={() => setOpen(false)}>
                 Book a demo
               </Button>
-              <Button as={Link} to="/register">
+              <Button as={Link} to="/join" onClick={() => setOpen(false)}>
                 Start free
               </Button>
             </div>

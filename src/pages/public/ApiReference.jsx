@@ -48,7 +48,7 @@ export default function ApiReference() {
             ))}
           </div>
           <p className="mt-8 text-center text-sm text-surface-500 dark:text-surface-400">
-            Need a key? <Link to="/register" className="font-semibold text-brand-600 dark:text-brand-400">Create an account →</Link>
+            Need a key? <Link to="/join" className="font-semibold text-brand-600 dark:text-brand-400">Create an account →</Link>
           </p>
         </div>
       </section>

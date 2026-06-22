@@ -54,7 +54,7 @@ export default function Hero() {
 
           <StaggerItem>
             <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row lg:justify-start">
-              <Button as={Link} to="/register" size="lg" className="w-full transition-transform hover:-translate-y-0.5 sm:w-auto">
+              <Button as={Link} to="/join" size="lg" className="w-full transition-transform hover:-translate-y-0.5 sm:w-auto">
                 Start building free <ArrowRight className="h-4 w-4" />
               </Button>
               <Button as="a" href="#how" variant="secondary" size="lg" className="w-full sm:w-auto">

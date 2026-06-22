@@ -35,7 +35,7 @@ export default function FAQ() {
             <p className="mt-1 text-sm text-surface-600 dark:text-surface-400">
               Our team replies within a few hours. Ask us anything.
             </p>
-            <Button as={Link} to="/register" size="sm" className="mt-4">
+            <Button as={Link} to="/join" size="sm" className="mt-4">
               Talk to us
             </Button>
           </div>

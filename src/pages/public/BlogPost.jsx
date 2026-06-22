@@ -53,7 +53,7 @@ export default function BlogPost() {
             <p className="mt-1 text-sm text-surface-600 dark:text-surface-400">
               Build a lead-capturing chatbot in minutes — free for 14 days.
             </p>
-            <Button as={Link} to="/register" className="mt-4">Start building free</Button>
+            <Button as={Link} to="/join" className="mt-4">Start building free</Button>
           </div>
         </div>
 

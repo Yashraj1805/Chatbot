@@ -94,7 +94,7 @@ export default function Pricing() {
 
                 <Button
                   as={Link}
-                  to="/register"
+                  to="/join"
                   variant={plan.highlighted ? 'primary' : 'secondary'}
                   className="mt-5 w-full transition-transform hover:-translate-y-0.5"
                 >

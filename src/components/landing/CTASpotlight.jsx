@@ -84,11 +84,8 @@ export default function CTASpotlight() {
           </p>
 
           <div className="relative mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button as={Link} to="/register" size="lg" variant="white" className="w-full transition-transform hover:-translate-y-0.5 sm:w-auto">
+            <Button as={Link} to="/join" size="lg" variant="white" className="w-full transition-transform hover:-translate-y-0.5 sm:w-auto">
               Start free trial <ArrowRight className="h-4 w-4" />
-            </Button>
-            <Button as={Link} to="/login" size="lg" variant="ghostLight" className="w-full sm:w-auto">
-              Log in
             </Button>
           </div>
 

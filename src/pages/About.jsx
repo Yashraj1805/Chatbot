@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, LogIn, Target, Heart, Zap, ShieldCheck } from 'lucide-react'
+import { ArrowRight, Target, Heart, Zap, ShieldCheck } from 'lucide-react'
 import Navbar from '../components/landing/Navbar.jsx'
 import Footer from '../components/landing/Footer.jsx'
 import Seo from '../components/Seo.jsx'
@@ -52,13 +52,10 @@ export default function About() {
               capture leads, and hand off to live agents — so no customer ever goes unanswered.
             </p>
 
-            {/* Login + Sign up */}
+            {/* Join the pilot */}
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Button as={Link} to="/register" size="lg" className="w-full sm:w-auto">
+              <Button as={Link} to="/join" size="lg" className="w-full sm:w-auto">
                 Sign up free <ArrowRight className="h-4 w-4" />
-              </Button>
-              <Button as={Link} to="/login" variant="secondary" size="lg" className="w-full sm:w-auto">
-                <LogIn className="h-4 w-4" /> Log in
               </Button>
             </div>
           </div>
@@ -146,11 +143,8 @@ export default function About() {
                 Create your free account in minutes, or log in to your workspace.
               </p>
               <div className="relative mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <Button as={Link} to="/register" size="lg" className="w-full bg-white text-brand-700 hover:bg-brand-50 sm:w-auto">
+                <Button as={Link} to="/join" size="lg" className="w-full bg-white text-brand-700 hover:bg-brand-50 sm:w-auto">
                   Sign up free <ArrowRight className="h-4 w-4" />
-                </Button>
-                <Button as={Link} to="/login" size="lg" variant="ghost" className="w-full text-white hover:bg-white/10 sm:w-auto">
-                  <LogIn className="h-4 w-4" /> Log in
                 </Button>
               </div>
             </div>
