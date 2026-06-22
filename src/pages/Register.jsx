@@ -5,15 +5,23 @@ import AuthLayout from '../components/layout/AuthLayout.jsx'
 import Button from '../components/ui/Button.jsx'
 import Seo from '../components/Seo.jsx'
 import { Field, Input } from '../components/ui/Input.jsx'
+import { saveLead } from '../lib/waitlist.js'
 
 export default function Register() {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
-    setTimeout(() => navigate('/welcome'), 900)
+    const form = new FormData(e.currentTarget)
+    await saveLead({
+      source: 'register',
+      name: form.get('name'),
+      email: form.get('email'),
+      company: form.get('company'),
+    })
+    navigate('/welcome')
   }
 
   return (
@@ -32,15 +40,15 @@ export default function Register() {
       <Seo title="Start free — Create your account" description="Create your VartaBot account and start a 14-day free trial. No credit card required." noindex />
       <form onSubmit={onSubmit} className="space-y-4">
         <Field label="Full name" htmlFor="name">
-          <Input id="name" type="text" icon={User} placeholder="Jane Doe" required />
+          <Input id="name" name="name" type="text" icon={User} placeholder="Jane Doe" required />
         </Field>
 
         <Field label="Work email" htmlFor="email">
-          <Input id="email" type="email" icon={Mail} placeholder="you@company.com" required />
+          <Input id="email" name="email" type="email" icon={Mail} placeholder="you@company.com" required />
         </Field>
 
         <Field label="Company" htmlFor="company">
-          <Input id="company" type="text" icon={Building2} placeholder="Acme Inc." />
+          <Input id="company" name="company" type="text" icon={Building2} placeholder="Acme Inc." />
         </Field>
 
         <Field label="Password" htmlFor="password" hint="Min. 8 characters">

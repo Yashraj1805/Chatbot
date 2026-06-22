@@ -5,17 +5,20 @@ import AuthLayout from '../components/layout/AuthLayout.jsx'
 import Button from '../components/ui/Button.jsx'
 import Seo from '../components/Seo.jsx'
 import { Field, Input } from '../components/ui/Input.jsx'
+import { saveLead } from '../lib/waitlist.js'
 
 export default function Login() {
   const navigate = useNavigate()
   const [showPw, setShowPw] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault()
-    // Pilot launch: sign in lands on the "coming soon" page.
+    // Pilot launch: capture the email, then land on the "coming soon" page.
     setLoading(true)
-    setTimeout(() => navigate('/welcome'), 800)
+    const form = new FormData(e.currentTarget)
+    await saveLead({ source: 'login', email: form.get('email') })
+    navigate('/welcome')
   }
 
   return (
@@ -35,7 +38,7 @@ export default function Login() {
 
       <form onSubmit={onSubmit} className="space-y-4">
         <Field label="Email" htmlFor="email">
-          <Input id="email" type="email" icon={Mail} placeholder="you@company.com" required />
+          <Input id="email" name="email" type="email" icon={Mail} placeholder="you@company.com" required />
         </Field>
 
         <Field
