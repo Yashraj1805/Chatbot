@@ -1,15 +1,13 @@
-import { Link, useNavigate } from 'react-router-dom'
-import { Home, LogOut, Sparkles, Rocket, Mail } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { Home, Sparkles, Rocket, Mail } from 'lucide-react'
 import Logo from '../components/Logo.jsx'
 import Button from '../components/ui/Button.jsx'
 import Seo from '../components/Seo.jsx'
 
-// Temporary post-login landing for the pilot launch. The full product portals
-// (customer / admin / agent dashboards) are not shipped yet, so every signed-in
-// route lands here: a warm thank-you for our pilot customers + a "coming soon".
+// Thank-you page shown after a visitor submits their email to join the pilot.
+// The full product is not live yet, so this confirms their spot + sets
+// expectations.
 export default function ComingSoon() {
-  const navigate = useNavigate()
-
   const upcoming = [
     'Build & manage no-code chatbots',
     'Capture and track your leads',
@@ -62,12 +60,9 @@ export default function ComingSoon() {
           ))}
         </ul>
 
-        <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <Button as={Link} to="/" variant="secondary">
+        <div className="mt-9 flex items-center justify-center">
+          <Button as={Link} to="/">
             <Home className="h-4 w-4" /> Back to home
-          </Button>
-          <Button onClick={() => navigate('/login')}>
-            <LogOut className="h-4 w-4" /> Log out
           </Button>
         </div>
 

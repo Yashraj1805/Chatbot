@@ -12,9 +12,7 @@ import ComingSoon from './pages/ComingSoon.jsx'
 // Everything else is route-level code-split (lazy) to keep the initial bundle small.
 // Public + auth pages
 const About = lazy(() => import('./pages/About.jsx'))
-const Login = lazy(() => import('./pages/Login.jsx'))
-const AdminLogin = lazy(() => import('./pages/AdminLogin.jsx'))
-const Register = lazy(() => import('./pages/Register.jsx'))
+const PilotSignup = lazy(() => import('./pages/PilotSignup.jsx'))
 const NotFound = lazy(() => import('./pages/NotFound.jsx'))
 
 // Public content / footer pages
@@ -69,9 +67,11 @@ function AppRoutes() {
       {/* Public marketing + auth */}
       <Route path="/" element={<Landing />} />
       <Route path="/about" element={<About />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/admin/login" element={<AdminLogin />} />
-      <Route path="/register" element={<Register />} />
+      {/* Single pilot entry point — email capture. Old auth links funnel here. */}
+      <Route path="/join" element={<PilotSignup />} />
+      <Route path="/login" element={<Navigate to="/join" replace />} />
+      <Route path="/register" element={<Navigate to="/join" replace />} />
+      <Route path="/admin/login" element={<Navigate to="/join" replace />} />
 
       {/* Public content / footer pages */}
       <Route path="/features" element={<FeaturesPage />} />
