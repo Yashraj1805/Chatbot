@@ -1,32 +1,21 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Mail, Lock, Eye, EyeOff, ShieldCheck, Bot, Headset } from 'lucide-react'
+import { Mail, Lock, Eye, EyeOff, ShieldCheck } from 'lucide-react'
 import AuthLayout from '../components/layout/AuthLayout.jsx'
 import Button from '../components/ui/Button.jsx'
 import Seo from '../components/Seo.jsx'
 import { Field, Input } from '../components/ui/Input.jsx'
-import { cn } from '../utils/cn.js'
-
-// Customer + Live Agent sign in here. Super Admin has a separate console login.
-// Pilot launch: both roles land on the "coming soon" page after sign in.
-const portalOptions = [
-  { id: 'customer', label: 'Customer', icon: Bot, home: '/welcome' },
-  { id: 'agent', label: 'Live Agent', icon: Headset, home: '/welcome' },
-]
 
 export default function Login() {
   const navigate = useNavigate()
   const [showPw, setShowPw] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [portal, setPortal] = useState('customer')
-
-  const home = portalOptions.find((p) => p.id === portal).home
 
   const onSubmit = (e) => {
     e.preventDefault()
-    // Mock auth — no real backend. Simulate a request then enter the chosen portal.
+    // Pilot launch: sign in lands on the "coming soon" page.
     setLoading(true)
-    setTimeout(() => navigate(home), 800)
+    setTimeout(() => navigate('/welcome'), 800)
   }
 
   return (
@@ -43,36 +32,10 @@ export default function Login() {
       }
     >
       <Seo title="Log in" noindex />
-      {/* Portal selector (demo only) */}
-      <div className="mb-6">
-        <p className="mb-2 text-xs font-medium uppercase tracking-wider text-surface-400">Sign in as</p>
-        <div className="grid grid-cols-2 gap-2">
-          {portalOptions.map((p) => {
-            const Icon = p.icon
-            const active = portal === p.id
-            return (
-              <button
-                key={p.id}
-                type="button"
-                onClick={() => setPortal(p.id)}
-                className={cn(
-                  'flex flex-col items-center gap-1.5 rounded-xl border p-3 text-center transition-all',
-                  active
-                    ? 'border-brand-500 bg-brand-50 text-brand-700 dark:bg-brand-950/40 dark:text-brand-300'
-                    : 'border-surface-200 text-surface-500 hover:border-surface-300 dark:border-surface-700 dark:hover:border-surface-600'
-                )}
-              >
-                <Icon className="h-5 w-5" />
-                <span className="text-xs font-semibold">{p.label}</span>
-              </button>
-            )
-          })}
-        </div>
-      </div>
 
       <form onSubmit={onSubmit} className="space-y-4">
         <Field label="Email" htmlFor="email">
-          <Input id="email" type="email" icon={Mail} placeholder="you@company.com" defaultValue="harpreet@thesachdevgroup.com" required />
+          <Input id="email" type="email" icon={Mail} placeholder="you@company.com" required />
         </Field>
 
         <Field
@@ -90,7 +53,6 @@ export default function Login() {
               type={showPw ? 'text' : 'password'}
               icon={Lock}
               placeholder="••••••••"
-              defaultValue="password"
               required
             />
             <button
@@ -120,7 +82,7 @@ export default function Login() {
         <div className="h-px flex-1 bg-surface-200 dark:bg-surface-800" />
       </div>
 
-      <Button variant="secondary" className="w-full" size="lg" onClick={() => navigate(home)}>
+      <Button variant="secondary" className="w-full" size="lg" onClick={() => navigate('/welcome')}>
         <svg className="h-4 w-4" viewBox="0 0 24 24">
           <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z" />
           <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z" />
