@@ -14,7 +14,7 @@ export default function AdminLogin() {
   const onSubmit = (e) => {
     e.preventDefault()
     setLoading(true)
-    setTimeout(() => navigate('/admin/dashboard'), 800)
+    setTimeout(() => navigate('/welcome'), 800)
   }
 
   const panel = (

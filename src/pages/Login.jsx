@@ -8,9 +8,10 @@ import { Field, Input } from '../components/ui/Input.jsx'
 import { cn } from '../utils/cn.js'
 
 // Customer + Live Agent sign in here. Super Admin has a separate console login.
+// Pilot launch: both roles land on the "coming soon" page after sign in.
 const portalOptions = [
-  { id: 'customer', label: 'Customer', icon: Bot, home: '/app/dashboard' },
-  { id: 'agent', label: 'Live Agent', icon: Headset, home: '/agent/dashboard' },
+  { id: 'customer', label: 'Customer', icon: Bot, home: '/welcome' },
+  { id: 'agent', label: 'Live Agent', icon: Headset, home: '/welcome' },
 ]
 
 export default function Login() {
