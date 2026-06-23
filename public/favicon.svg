@@ -1,16 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
   <defs>
     <linearGradient id="b" x1="3" y1="2" x2="37" y2="38" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#16d6c4" />
-      <stop offset="0.5" stop-color="#10b8a6" />
-      <stop offset="1" stop-color="#0e8f6f" />
+      <stop stop-color="#2b4f87" />
+      <stop offset="0.55" stop-color="#213655" />
+      <stop offset="1" stop-color="#e9853d" />
     </linearGradient>
     <radialGradient id="gl" cx="0.32" cy="0.18" r="0.85">
       <stop offset="0" stop-color="#ffffff" stop-opacity="0.5" />
       <stop offset="0.55" stop-color="#ffffff" stop-opacity="0" />
     </radialGradient>
     <filter id="sh" x="-30%" y="-30%" width="160%" height="160%">
-      <feDropShadow dx="0" dy="0.8" stdDeviation="0.9" flood-color="#003b37" flood-opacity="0.45" />
+      <feDropShadow dx="0" dy="0.8" stdDeviation="0.9" flood-color="#111a2a" flood-opacity="0.45" />
     </filter>
   </defs>
   <rect width="40" height="40" rx="11" fill="url(#b)" />

@@ -21,7 +21,7 @@ const BUBBLE_IN = {
 // All behavior is mock/local: the bot echoes a canned reply with a typing delay.
 export default function ChatWidget({
   mode = 'floating',
-  themeColor = '#0d8983',
+  themeColor = '#284b7d',
   botName = 'VartaBot Assistant',
   welcomeMessage = '👋 Hi there! How can I help you today?',
   quickReplies = ['💰 Pricing', '🛟 Support', '📅 Book a demo'],

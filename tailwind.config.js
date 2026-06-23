@@ -5,48 +5,47 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Brand color system — a calm, feel-good teal/aqua
+        // Brand color system — deep navy blue (matches the VartaBot logo)
         brand: {
-          50: '#f0fdfa',
-          100: '#cbfbf1',
-          200: '#98f4e5',
-          300: '#5ce6d5',
-          400: '#2bccbe',
-          500: '#14a7a0',
-          600: '#0d8983',
-          700: '#0f6d69',
-          800: '#125754',
-          900: '#134845',
-          950: '#042f2d',
+          50: '#eff4fa',
+          100: '#d6e3f1',
+          200: '#b0c8e2',
+          300: '#82a4cd',
+          400: '#547eb2',
+          500: '#356098',
+          600: '#284b7d',
+          700: '#233e66',
+          800: '#213655',
+          900: '#1c2c45',
+          950: '#111a2a',
         },
-        // Accent — a fresh emerald/mint, analogous to teal for a calm, cohesive feel
+        // Accent — warm orange, the VartaBot logo's accent colour
         accent: {
-          50: '#ecfdf6',
-          100: '#d0fbe9',
-          200: '#a4f5d4',
-          300: '#6debbd',
-          400: '#34dba4',
-          500: '#15c592',
-          600: '#08a277',
-          700: '#0a8061',
-          800: '#0d654e',
-          900: '#0d5341',
-          950: '#022e22',
+          50: '#fdf4ed',
+          100: '#fae3cf',
+          200: '#f5c79e',
+          300: '#efa367',
+          400: '#e9853d',
+          500: '#e06f24',
+          600: '#c85a1a',
+          700: '#a44518',
+          800: '#84381a',
+          900: '#6c2f18',
+          950: '#3a1709',
         },
-        // Neutral surface palette — warm "sage" neutral (calmer than cool slate),
-        // pairs naturally with the teal brand for a feel-good vibe.
+        // Neutral surface palette — cool slate, pairs cleanly with indigo/violet.
         surface: {
-          50: '#f7f8f7',
-          100: '#eef1ef',
-          200: '#e1e6e2',
-          300: '#c9d0cb',
-          400: '#97a29a',
-          500: '#6a766e',
-          600: '#525c55',
-          700: '#3f4843',
-          800: '#262d29',
-          900: '#181d1a',
-          950: '#0d100e',
+          50: '#f8fafc',
+          100: '#f1f5f9',
+          200: '#e2e8f0',
+          300: '#cbd5e1',
+          400: '#94a3b8',
+          500: '#64748b',
+          600: '#475569',
+          700: '#334155',
+          800: '#1e293b',
+          900: '#0f172a',
+          950: '#020617',
         },
       },
       fontFamily: {
@@ -56,7 +55,7 @@ export default {
       boxShadow: {
         soft: '0 2px 8px -2px rgba(16, 24, 40, 0.08), 0 4px 16px -4px rgba(16, 24, 40, 0.06)',
         card: '0 1px 3px rgba(16, 24, 40, 0.1), 0 1px 2px rgba(16, 24, 40, 0.06)',
-        glow: '0 0 0 1px rgba(20, 167, 160, 0.1), 0 10px 40px -10px rgba(20, 167, 160, 0.4)',
+        glow: '0 0 0 1px rgba(40, 75, 125, 0.1), 0 10px 40px -10px rgba(40, 75, 125, 0.4)',
       },
       keyframes: {
         'fade-in': {

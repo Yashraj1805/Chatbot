@@ -16,16 +16,16 @@ export function LogoMark({ className = 'h-9 w-9' }) {
     >
       <defs>
         <linearGradient id="vartaBase" x1="3" y1="2" x2="37" y2="38" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#16d6c4" />
-          <stop offset="0.5" stopColor="#10b8a6" />
-          <stop offset="1" stopColor="#0e8f6f" />
+          <stop stopColor="#2b4f87" />
+          <stop offset="0.55" stopColor="#213655" />
+          <stop offset="1" stopColor="#e9853d" />
         </linearGradient>
         <radialGradient id="vartaGloss" cx="0.32" cy="0.18" r="0.85">
           <stop offset="0" stopColor="#ffffff" stopOpacity="0.5" />
           <stop offset="0.55" stopColor="#ffffff" stopOpacity="0" />
         </radialGradient>
         <filter id="vartaShadow" x="-30%" y="-30%" width="160%" height="160%">
-          <feDropShadow dx="0" dy="0.8" stdDeviation="0.9" floodColor="#003b37" floodOpacity="0.45" />
+          <feDropShadow dx="0" dy="0.8" stdDeviation="0.9" floodColor="#111a2a" floodOpacity="0.45" />
         </filter>
       </defs>
       <rect width="40" height="40" rx="11" fill="url(#vartaBase)" />

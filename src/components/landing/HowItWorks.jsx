@@ -8,7 +8,7 @@ const visuals = [
   // 1. Create your chatbot — brand color + name
   <div key="v1" className="rounded-xl border border-surface-200 bg-surface-50 p-3 text-left dark:border-surface-700 dark:bg-surface-950/50">
     <div className="flex gap-1.5">
-      {['#0d8983', '#15c592', '#6c8cff', '#f59e0b', '#ec4899'].map((c, i) => (
+      {['#284b7d', '#e9853d', '#6c8cff', '#f59e0b', '#ec4899'].map((c, i) => (
         <span
           key={c}
           className={`h-5 w-5 rounded-full ${i === 0 ? 'ring-2 ring-offset-2 ring-brand-500 dark:ring-offset-surface-950' : ''}`}
