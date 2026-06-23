@@ -5,7 +5,6 @@ import Footer from '../components/landing/Footer.jsx'
 import Seo from '../components/Seo.jsx'
 import Button from '../components/ui/Button.jsx'
 import Card from '../components/ui/Card.jsx'
-import Avatar from '../components/ui/Avatar.jsx'
 
 const stats = [
   { label: 'Businesses', value: '1,200+' },
@@ -19,13 +18,6 @@ const values = [
   { icon: Heart, title: 'Customer obsessed', desc: 'Every feature starts with a real problem our customers face.' },
   { icon: ShieldCheck, title: 'Trust & privacy', desc: 'Your data and your visitors’ data are handled with care, always.' },
   { icon: Target, title: 'Simple by design', desc: 'Powerful doesn’t have to mean complicated. We sweat the details.' },
-]
-
-const team = [
-  { name: 'Alex Morgan', role: 'Founder & CEO' },
-  { name: 'Priya Patel', role: 'Head of Product' },
-  { name: 'Daniel Cho', role: 'Head of Engineering' },
-  { name: 'Camila Torres', role: 'Head of Customer Success' },
 ]
 
 export default function About() {
@@ -104,27 +96,6 @@ export default function About() {
                   </div>
                   <h3 className="mt-4 text-base font-semibold text-surface-900 dark:text-white">{v.title}</h3>
                   <p className="mt-1 text-sm text-surface-500 dark:text-surface-400">{v.desc}</p>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Team */}
-        <section className="bg-surface-50 py-20 dark:bg-surface-900/40">
-          <div className="container-page">
-            <div className="mx-auto max-w-2xl text-center">
-              <h2 className="text-3xl font-bold tracking-tight text-surface-900 dark:text-white">Meet the team</h2>
-              <p className="mt-3 text-surface-600 dark:text-surface-300">
-                A small team obsessed with making customer conversations simple.
-              </p>
-            </div>
-            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {team.map((m) => (
-                <Card key={m.name} className="flex flex-col items-center p-6 text-center">
-                  <Avatar name={m.name} size="lg" />
-                  <p className="mt-4 font-semibold text-surface-900 dark:text-white">{m.name}</p>
-                  <p className="text-sm text-surface-500 dark:text-surface-400">{m.role}</p>
                 </Card>
               ))}
             </div>
