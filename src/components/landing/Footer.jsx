@@ -104,8 +104,8 @@ export default function Footer() {
           )}
         </div>
 
-        <div className="grid gap-10 lg:grid-cols-6">
-          <div className="lg:col-span-2">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-4 lg:grid-cols-6">
+          <div className="col-span-2 sm:col-span-4 lg:col-span-2">
             <Link to="/" aria-label="VartaBot home">
               <Logo markClassName="h-12 w-12" textClassName="text-xl" />
             </Link>
