@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { cn } from '../utils/cn.js'
 
 // Brand mark for "VartaBot" — a glossy app-icon style tile: vibrant teal→mint
@@ -73,6 +74,24 @@ export default function Logo({
   textClassName = 'text-lg',
   showWordmark = true,
 }) {
+  const [imgFailed, setImgFailed] = useState(false)
+  // The brand logo image already includes the "VartaBot" wordmark, so we render
+  // just the image. Falls back to the built-in SVG mark + wordmark if missing.
+  const heightClass = (markClassName.match(/h-\d+/) || ['h-9'])[0]
+
+  if (!imgFailed) {
+    return (
+      <span className={cn('flex items-center', className)}>
+        <img
+          src="/logo.jpeg"
+          alt="VartaBot"
+          onError={() => setImgFailed(true)}
+          className={cn(heightClass, 'w-auto')}
+        />
+      </span>
+    )
+  }
+
   return (
     <span className={cn('flex items-center gap-2.5', className)}>
       <LogoMark className={markClassName} />

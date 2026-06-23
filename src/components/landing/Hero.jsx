@@ -46,9 +46,8 @@ export default function Hero() {
           </StaggerItem>
 
           <StaggerItem>
-            <p className="mx-auto mt-5 max-w-xl text-lg text-surface-600 dark:text-surface-300 lg:mx-0">
-              Create rule-based chatbots, capture leads, and answer visitors instantly. Define
-              triggers and responses visually, then embed with a single line of code.
+            <p className="mx-auto mt-5 max-w-md text-lg text-surface-600 dark:text-surface-300 lg:mx-0">
+              No-code chatbots that capture leads and reply 24/7. Live in minutes.
             </p>
           </StaggerItem>
 
