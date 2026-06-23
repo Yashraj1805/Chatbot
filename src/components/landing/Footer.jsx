@@ -87,7 +87,7 @@ export default function Footer() {
         <div className="grid gap-10 lg:grid-cols-6">
           <div className="lg:col-span-2">
             <Link to="/" aria-label="VartaBot home">
-              <Logo />
+              <Logo markClassName="h-12 w-12" textClassName="text-xl" />
             </Link>
             <p className="mt-4 max-w-xs text-sm text-surface-500 dark:text-surface-400">
               The no-code platform for building rule-based chatbots that convert visitors into
