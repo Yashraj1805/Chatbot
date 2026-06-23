@@ -30,7 +30,7 @@ function Cell({ value, highlight = false }) {
 export default function Comparison() {
   const rows = comparison.rows
   return (
-    <section className="py-20 sm:py-28">
+    <section className="py-12 sm:py-16">
       <div className="container-page">
         <Reveal className="mx-auto max-w-2xl text-center">
           <span className="text-sm font-semibold uppercase tracking-wider text-brand-600 dark:text-brand-400">

@@ -16,7 +16,7 @@ export default function Hero() {
   const glowScale = useTransform(scrollY, [0, 600], [1, 1.15])
 
   return (
-    <section className="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28">
+    <section className="relative overflow-hidden pt-28 pb-12 sm:pt-32 sm:pb-16">
       {/* Background glow */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <motion.div

@@ -5,7 +5,7 @@ import Reveal from './Reveal.jsx'
 
 export default function CTA() {
   return (
-    <section className="py-20 sm:py-28">
+    <section className="py-12 sm:py-16">
       <div className="container-page">
         <Reveal className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-600 to-brand-800 px-6 py-16 text-center sm:px-16">
           <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-white/10 blur-2xl" />

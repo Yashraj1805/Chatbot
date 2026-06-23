@@ -11,7 +11,7 @@ export default function FAQ() {
   const [open, setOpen] = useState(0)
 
   return (
-    <section id="faq" className="scroll-mt-20 py-20 sm:py-28">
+    <section id="faq" className="scroll-mt-20 py-12 sm:py-16">
       <div className="container-page grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
         {/* Left — heading + support */}
         <Reveal className="lg:sticky lg:top-24 lg:self-start">

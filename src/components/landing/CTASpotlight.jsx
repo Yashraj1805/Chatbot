@@ -10,7 +10,7 @@ export default function CTASpotlight() {
   const reduce = useReducedMotion()
 
   return (
-    <section className="py-20 sm:py-28">
+    <section className="py-12 sm:py-16">
       <div className="container-page">
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 24 }}
