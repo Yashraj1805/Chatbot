@@ -34,7 +34,7 @@ export default function Navbar() {
     >
       <nav className="container-page flex h-16 items-center justify-between">
         <Link to="/" aria-label="VartaBot home">
-          <Logo markClassName="h-12" />
+          <Logo markClassName="h-10 w-10" />
         </Link>
 
         <div className="hidden items-center gap-8 md:flex">

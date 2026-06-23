@@ -75,26 +75,20 @@ export default function Logo({
   showWordmark = true,
 }) {
   const [imgFailed, setImgFailed] = useState(false)
-  // The brand logo image already includes the "VartaBot" wordmark, so we render
-  // just the image. Falls back to the built-in SVG mark + wordmark if missing.
-  const heightClass = (markClassName.match(/h-\d+/) || ['h-9'])[0]
-
-  if (!imgFailed) {
-    return (
-      <span className={cn('flex items-center', className)}>
-        <img
-          src="/logo.jpeg"
-          alt="VartaBot"
-          onError={() => setImgFailed(true)}
-          className={cn(heightClass, 'w-auto')}
-        />
-      </span>
-    )
-  }
-
+  // Icon-only brand logo (transparent PNG) + "VartaBot" wordmark. Falls back to
+  // the built-in SVG mark if the image is missing.
   return (
     <span className={cn('flex items-center gap-2.5', className)}>
-      <LogoMark className={markClassName} />
+      {imgFailed ? (
+        <LogoMark className={markClassName} />
+      ) : (
+        <img
+          src="/logo.png"
+          alt="VartaBot"
+          onError={() => setImgFailed(true)}
+          className={cn(markClassName, 'object-contain')}
+        />
+      )}
       {showWordmark && (
         <span className={cn('font-bold tracking-tight text-surface-900 dark:text-white', textClassName)}>
           Varta<span className="text-brand-600 dark:text-brand-400">Bot</span>
