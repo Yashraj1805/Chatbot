@@ -28,7 +28,7 @@ export default function Navbar() {
       className={cn(
         'fixed inset-x-0 top-0 z-40 transition-all duration-300',
         scrolled
-          ? 'border-b border-brand-100 bg-brand-50/95 shadow-sm backdrop-blur-lg dark:border-surface-800 dark:bg-surface-950/90'
+          ? 'border-b border-brand-300 bg-brand-200/95 shadow-sm backdrop-blur-lg dark:border-surface-800 dark:bg-surface-950/90'
           : 'border-b border-transparent'
       )}
     >
