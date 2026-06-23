@@ -32,7 +32,7 @@ export default function PilotSignup() {
       />
 
       <div className="relative w-full max-w-md">
-        <Logo className="justify-center" markClassName="h-12 w-12 drop-shadow-sm" textClassName="text-2xl" />
+        <Logo className="justify-center" markClassName="h-16 w-16 drop-shadow-sm" textClassName="text-3xl" />
 
         <span className="mt-8 inline-flex items-center gap-1.5 rounded-full border border-brand-200 bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700 dark:border-brand-900/60 dark:bg-brand-950/40 dark:text-brand-300">
           <Sparkles className="h-3.5 w-3.5" /> Pilot program
