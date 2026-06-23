@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import Button from '../ui/Button.jsx'
 import Logo from '../Logo.jsx'
-import ThemeToggle from '../layout/ThemeToggle.jsx'
 import { cn } from '../../utils/cn.js'
 
 const links = [
@@ -57,7 +56,6 @@ export default function Navbar() {
         </div>
 
         <div className="hidden items-center gap-2 md:flex">
-          <ThemeToggle />
           <Button as={Link} to="/#pricing" variant="secondary" size="sm">
             Book a demo
           </Button>
@@ -67,7 +65,6 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-1 md:hidden">
-          <ThemeToggle />
           <button
             onClick={() => setOpen((o) => !o)}
             className="rounded-lg p-2 text-surface-600 hover:bg-surface-100 dark:text-surface-300 dark:hover:bg-surface-800"

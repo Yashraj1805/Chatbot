@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { X, Send, Sparkles } from 'lucide-react'
+import { X, Send, Sparkles, ChevronDown } from 'lucide-react'
 import { LogoGlyph } from './Logo.jsx'
 
 // Site-wide AI helper. Talks to our serverless function (/api/assistant, backed
@@ -125,9 +125,9 @@ export default function AIAssistant() {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+    <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3 sm:bottom-6 sm:right-6">
       {open && (
-        <div className="flex h-[30rem] w-[22rem] flex-col overflow-hidden rounded-2xl border border-surface-200 bg-white shadow-2xl animate-slide-up dark:border-surface-700 dark:bg-surface-900 sm:w-96">
+        <div className="flex h-[min(32rem,75vh)] w-[min(22rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-surface-200 bg-white shadow-2xl animate-slide-up dark:border-surface-700 dark:bg-surface-900 sm:w-96">
           {/* Header */}
           <div className="relative flex items-center gap-3 bg-gradient-to-br from-brand-600 to-accent-600 px-4 py-3.5 text-white">
             <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/25 backdrop-blur">
@@ -137,8 +137,8 @@ export default function AIAssistant() {
               <p className="truncate text-sm font-semibold">VartaBot AI</p>
               <p className="truncate text-xs text-white/80">Ask me anything · always on</p>
             </div>
-            <button onClick={() => setOpen(false)} className="rounded-lg p-1 transition-colors hover:bg-white/15" aria-label="Close assistant">
-              <X className="h-5 w-5" />
+            <button onClick={() => setOpen(false)} className="rounded-lg p-1 transition-colors hover:bg-white/15" aria-label="Minimize assistant">
+              <ChevronDown className="h-5 w-5" />
             </button>
           </div>
 
