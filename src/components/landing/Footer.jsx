@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Twitter, Github, Linkedin } from 'lucide-react'
+import { Twitter, Github, Linkedin, Check } from 'lucide-react'
 import Logo from '../Logo.jsx'
+import { saveLead } from '../../lib/waitlist.js'
 
 const columns = [
   {
@@ -51,6 +53,17 @@ const linkCls =
   'text-sm text-surface-500 transition-colors hover:text-brand-600 dark:text-surface-400 dark:hover:text-brand-400'
 
 export default function Footer() {
+  const [email, setEmail] = useState('')
+  const [subscribed, setSubscribed] = useState(false)
+
+  const onSubscribe = (e) => {
+    e.preventDefault()
+    if (!email.trim()) return
+    saveLead({ source: 'newsletter', email: email.trim() })
+    setSubscribed(true)
+    setEmail('')
+  }
+
   return (
     <footer className="border-t border-surface-200 bg-surface-50 dark:border-surface-800 dark:bg-surface-950">
       <div className="container-page py-14">
@@ -64,23 +77,31 @@ export default function Footer() {
               Join 8,000+ marketers. One short email a week, no spam.
             </p>
           </div>
-          <form
-            onSubmit={(e) => e.preventDefault()}
-            className="flex w-full max-w-sm items-center gap-2 sm:w-auto"
-          >
-            <input
-              type="email"
-              required
-              placeholder="you@company.com"
-              className="h-11 flex-1 rounded-lg border border-surface-300 bg-white px-3.5 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-500/40 dark:border-surface-700 dark:bg-surface-800 dark:text-white sm:w-56"
-            />
-            <button
-              type="submit"
-              className="h-11 shrink-0 rounded-lg bg-brand-600 px-4 text-sm font-semibold text-white transition-colors hover:bg-brand-700"
+          {subscribed ? (
+            <p className="flex items-center gap-2 text-sm font-medium text-brand-700 dark:text-brand-300">
+              <Check className="h-4 w-4" /> You’re subscribed! Thanks for joining. 🎉
+            </p>
+          ) : (
+            <form
+              onSubmit={onSubscribe}
+              className="flex w-full max-w-sm items-center gap-2 sm:w-auto"
             >
-              Subscribe
-            </button>
-          </form>
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@company.com"
+                className="h-11 flex-1 rounded-lg border border-surface-300 bg-white px-3.5 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-500/40 dark:border-surface-700 dark:bg-surface-800 dark:text-white sm:w-56"
+              />
+              <button
+                type="submit"
+                className="h-11 shrink-0 rounded-lg bg-brand-600 px-4 text-sm font-semibold text-white transition-colors hover:bg-brand-700"
+              >
+                Subscribe
+              </button>
+            </form>
+          )}
         </div>
 
         <div className="grid gap-10 lg:grid-cols-6">
