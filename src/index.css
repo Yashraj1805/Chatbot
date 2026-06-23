@@ -6,11 +6,17 @@
   html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Stop the page from scrolling/rubber-banding sideways on touch devices */
+    overflow-x: hidden;
+    overscroll-behavior-x: none;
   }
 
   body {
     @apply bg-surface-50 text-surface-900 font-sans antialiased;
     @apply dark:bg-surface-950 dark:text-surface-100;
+    width: 100%;
+    overflow-x: hidden;
+    overscroll-behavior-x: none;
   }
 
   /* Headings use the display face for personality + hierarchy */
