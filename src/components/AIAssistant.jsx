@@ -40,7 +40,7 @@ const KB = [
   },
   {
     keys: ['support', 'help', 'contact', 'talk', 'human', 'sales'],
-    a: 'Happy to help! You can reach our team from the Contact page, or start a free trial and we’ll guide you through onboarding.',
+    a: 'Happy to help! Start a free trial and we’ll guide you through onboarding — or just drop your email and our team will reach out.',
   },
   {
     keys: ['cancel', 'refund', 'money back'],
@@ -56,7 +56,7 @@ function localAnswer(text) {
   if (hit) return hit.a
   if (/(hi|hello|hey|namaste)/.test(t))
     return 'Hi! 👋 I’m the VartaBot AI assistant. Ask me anything about pricing, features, integrations, or getting started.'
-  return "Great question! I can help with pricing, features, integrations, security, and setup. For anything specific, our team is one click away on the Contact page — what would you like to know?"
+  return "Great question! I can help with pricing, features, integrations, security, and setup. Want to start a free trial, or share your email so our team can reach out?"
 }
 
 export default function AIAssistant() {
