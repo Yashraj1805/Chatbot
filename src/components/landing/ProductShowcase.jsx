@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { LayoutDashboard, MessageSquare, Users, BarChart3, Settings, Bot, TrendingUp } from 'lucide-react'
 import Reveal from './Reveal.jsx'
+import Logo from '../Logo.jsx'
 
 // A stylised, static mock of the product dashboard inside a browser frame.
 // Pure markup — gives visitors the "this is a real platform" signal the hero
@@ -45,11 +46,8 @@ export default function ProductShowcase() {
             <div className="flex">
               {/* sidebar */}
               <aside className="hidden w-44 shrink-0 border-r border-surface-200 p-3 dark:border-surface-800 sm:block">
-                <div className="flex items-center gap-2 px-2 pb-4">
-                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-brand-500 to-accent-500 text-white">
-                    <Bot className="h-4 w-4" />
-                  </span>
-                  <span className="text-sm font-bold text-surface-900 dark:text-white">VartaBot</span>
+                <div className="px-2 pb-4">
+                  <Logo markClassName="h-8 w-8" textClassName="text-sm" />
                 </div>
                 <nav className="space-y-1">
                   {navItems.map((n) => (
