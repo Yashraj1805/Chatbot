@@ -43,10 +43,9 @@ export default function ChatWidget({
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' })
   }, [messages, typing])
 
-  const send = async (text) => {
+  const send = (text) => {
     const value = (text ?? input).trim()
     if (!value) return
-    const history = messages.slice(-8)
     setMessages((m) => [...m, { from: 'user', text: value }])
     setInput('')
     setTyping(true)
@@ -58,23 +57,13 @@ export default function ChatWidget({
       saveLead({ source: 'widget', email })
     }
 
-    // Real answer from Claude; fall back to the local mock reply if the API
-    // is unavailable (e.g. local `npm run dev`, or no key configured).
-    let reply
-    try {
-      const res = await fetch('/api/assistant', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: value, history }),
-      })
-      const data = await res.json()
-      reply = res.ok && data.reply ? data.reply : mockReply(value, history)
-    } catch (e) {
-      reply = mockReply(value, history)
-    }
-
-    setTyping(false)
-    setMessages((m) => [...m, { from: 'bot', text: reply }])
+    // Rule-based reply — this widget mirrors the product itself (a no-code,
+    // rule-based bot). It guides the visitor to leave their email.
+    const reply = mockReply(value, messages)
+    setTimeout(() => {
+      setTyping(false)
+      setMessages((m) => [...m, { from: 'bot', text: reply }])
+    }, 800)
   }
 
   const panel = (
@@ -287,7 +276,7 @@ function mockReply(text, history = []) {
 
   // Email capture flow — progresses instead of looping.
   if (hasEmail)
-    return 'Perfect, got it ✅ — I’ve noted that. In the real product this creates a lead instantly. Anything else I can help with?'
+    return 'Perfect, got it ✅ — our team will reach out to you shortly. Anything else I can help with?'
   if (askedEmail) {
     if (/\b(yes|yeah|yep|sure|ok|okay|please|go ahead)\b/.test(t))
       return 'Great — just type your work email (like you@company.com) and I’ll set it up. ✉️'
