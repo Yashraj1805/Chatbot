@@ -257,59 +257,31 @@ function Dot({ delay }) {
   )
 }
 
-// Small mock "rule engine" so the preview feels alive. Covers common intents and
-// rotates its fallback so it never repeats the same line over and over.
-const FALLBACKS = [
-  'Got it 👍 I can help with pricing, setup, lead capture, or booking a demo — which sounds useful?',
-  'Sure! Tell me what you’re after — pricing, features, or a quick demo?',
-  'Happy to help! Try asking about pricing, integrations, or how setup works. 🙂',
-]
-let fbIndex = 0
-
+// Simple, predictable rule engine — mirrors the no-code product. Every path
+// either confirms a captured email or guides the visitor to leave one. No
+// random fallbacks, no dead-end loops.
 function mockReply(text, history = []) {
   const t = text.toLowerCase().trim()
-  if (!t) return FALLBACKS[0]
+  const hasEmail = EMAIL_RE.test(text)
+  // Did we already thank them for an email earlier in this chat?
+  const gotEmail = history.some((m) => m.from === 'bot' && /reach out/i.test(m.text))
 
-  const lastBot = [...history].reverse().find((m) => m.from === 'bot')?.text?.toLowerCase() || ''
-  const askedEmail = lastBot.includes('email')
-  const hasEmail = /[^\s@]+@[^\s@]+\.[^\s@]+/.test(t)
+  // 1. They just shared an email → confirm and we're done.
+  if (hasEmail) return 'Perfect, thank you! ✅ Our team will reach out to you shortly.'
 
-  // Email capture flow — progresses instead of looping.
-  if (hasEmail)
-    return 'Perfect, got it ✅ — our team will reach out to you shortly. Anything else I can help with?'
-  if (askedEmail) {
-    if (/\b(yes|yeah|yep|sure|ok|okay|please|go ahead)\b/.test(t))
-      return 'Great — just type your work email (like you@company.com) and I’ll set it up. ✉️'
-    if (/\b(no|nope|not now|later|nah)\b/.test(t))
-      return 'No problem! Browse pricing or features anytime — I’m here whenever you’re ready. 🙂'
-  }
+  // 2. We already have their email → don't keep asking.
+  if (gotEmail) return 'You’re all set! 🙌 Our team has your details and will be in touch soon.'
 
-  if (/\b(hi|hello|hey|namaste|yo|hii)\b/.test(t))
-    return 'Hey there! 👋 I can help with pricing, a demo, setup, or lead capture. What brings you in today?'
-  if (/(thank|thx|thanks)/.test(t))
-    return 'You’re welcome! 😊 Anything else — pricing, a demo, or setup help?'
-  if (/(bye|goodbye|see ya|see you)/.test(t))
-    return 'Take care! 👋 I’m here 24/7 whenever you need me.'
+  // 3. A short, on-brand line per intent — always ending by asking for the email.
   if (/(pric|cost|plan|how much|budget|₹|💰)/.test(t))
-    return 'Plans start at ₹99/mo with a 14-day free trial. Want me to start your trial? Just share your work email. ✉️'
-  if (/(free|trial|start)/.test(t))
-    return 'Awesome — your 14-day free trial needs no credit card. What’s your work email and I’ll set it up? ✉️'
+    return 'Plans start at just ₹99/mo with a 14-day free trial. Share your work email and our team will reach out to get you started. ✉️'
   if (/(demo|book|call|schedule|meeting|📅)/.test(t))
-    return 'Love it! A quick demo takes ~15 min. Drop your work email and I’ll send an invite. ✉️'
-  if (/(setup|set up|install|embed|integrat|wordpress|shopify|webflow|wix|add to|code|website)/.test(t))
-    return 'Setup is 3 steps: create a bot, add rules, paste one line of code — live in under 15 min. Which platform is your site on?'
+    return 'Happy to set up a quick demo! Drop your work email and our team will reach out. ✉️'
   if (/(support|help|issue|problem|stuck|🛟)/.test(t))
-    return 'Happy to help! Is it about setup, billing, or a feature? Tell me a bit more and I’ll point you the right way.'
-  if (/(lead|capture|crm|contact)/.test(t))
-    return 'VartaBot captures names, emails & phone numbers automatically. Want to try it — what’s your work email? ✉️'
-  if (/(feature|what can|what do|do you|able to|capab)/.test(t))
-    return 'I can greet visitors, answer FAQs, capture leads, and hand off to a human — all no-code. Want to see pricing or start a free trial?'
-  if (/\b(yes|yeah|yep|sure|ok|okay|sounds good|please)\b/.test(t))
-    return 'Perfect 🙌 Let’s get you started — what’s your work email and I’ll set up your free trial? ✉️'
-  if (/\b(no|nope|not now|later|nah)\b/.test(t))
-    return 'No worries! I’m here whenever you’re ready. Curious about pricing or what it can do?'
+    return 'We’d love to help! Share your work email and our team will reach out to assist you personally. ✉️'
+  if (/(hi|hello|hey|namaste|yo|hii)/.test(t))
+    return 'Hi there! 👋 VartaBot helps you launch a no-code chatbot in minutes. Share your work email and our team will get you set up. ✉️'
 
-  const reply = FALLBACKS[fbIndex % FALLBACKS.length]
-  fbIndex++
-  return reply
+  // 4. Anything else → still funnel to the email, no awkward loop.
+  return 'Got it! Leave your work email here and our team will reach out to help you get started. ✉️'
 }
