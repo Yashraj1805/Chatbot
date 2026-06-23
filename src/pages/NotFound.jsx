@@ -21,8 +21,8 @@ export default function NotFound() {
         <Button as={Link} to="/">
           <Home className="h-4 w-4" /> Back home
         </Button>
-        <Button as={Link} to="/app/dashboard" variant="secondary">
-          Go to dashboard
+        <Button as={Link} to="/join" variant="secondary">
+          Start free
         </Button>
       </div>
     </div>

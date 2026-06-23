@@ -74,7 +74,7 @@ export default function Help() {
                   </p>
                   <p className="mt-2 text-sm text-surface-500 dark:text-surface-400">
                     Try a different term, or{' '}
-                    <Link to="/contact" className="font-semibold text-brand-600 dark:text-brand-400">contact support →</Link>
+                    <Link to="/join" className="font-semibold text-brand-600 dark:text-brand-400">get in touch →</Link>
                   </p>
                 </div>
               )}
@@ -98,7 +98,7 @@ export default function Help() {
               </div>
               <p className="mt-8 text-center text-sm text-surface-500 dark:text-surface-400">
                 Can’t find an answer?{' '}
-                <Link to="/contact" className="font-semibold text-brand-600 dark:text-brand-400">Contact support →</Link>
+                <Link to="/join" className="font-semibold text-brand-600 dark:text-brand-400">Get in touch →</Link>
               </p>
             </>
           )}

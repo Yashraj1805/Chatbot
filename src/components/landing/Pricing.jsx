@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Check, CreditCard, Ban, ShieldCheck, Clock } from 'lucide-react'
-import { pricingPlans } from '../../data/mockData.js'
+import { pricingPlans, billingTerms, lifetimeDeal } from '../../data/mockData.js'
 import Button from '../ui/Button.jsx'
 import Reveal from './Reveal.jsx'
 import { Stagger, StaggerItem, AnimatedNumber } from '../motion/index.jsx'
@@ -15,7 +15,7 @@ const includes = [
 ]
 
 export default function Pricing() {
-  const [annual, setAnnual] = useState(false)
+  const [term, setTerm] = useState('monthly')
 
   return (
     <section id="pricing" className="scroll-mt-20 py-20 sm:py-28">
@@ -31,40 +31,37 @@ export default function Pricing() {
             Start free. Upgrade when you grow. No hidden fees, cancel anytime.
           </p>
 
-          {/* Billing toggle */}
-          <div className="mt-8 inline-flex items-center gap-1 rounded-full border border-surface-200 bg-white p-1 dark:border-surface-700 dark:bg-surface-900">
-            <button
-              onClick={() => setAnnual(false)}
-              className={cn(
-                'rounded-full px-4 py-1.5 text-sm font-semibold transition-colors',
-                !annual ? 'bg-brand-600 text-white' : 'text-surface-500 hover:text-surface-700 dark:hover:text-surface-300'
-              )}
-            >
-              Monthly
-            </button>
-            <button
-              onClick={() => setAnnual(true)}
-              className={cn(
-                'flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-semibold transition-colors',
-                annual ? 'bg-brand-600 text-white' : 'text-surface-500 hover:text-surface-700 dark:hover:text-surface-300'
-              )}
-            >
-              Annual
-              <span
+          {/* Billing term toggle — longer commitment, lower /mo price */}
+          <div className="mt-8 inline-flex flex-wrap items-center justify-center gap-1 rounded-full border border-surface-200 bg-white p-1 dark:border-surface-700 dark:bg-surface-900">
+            {billingTerms.map((t) => (
+              <button
+                key={t.key}
+                onClick={() => setTerm(t.key)}
                 className={cn(
-                  'rounded-full px-1.5 py-0.5 text-[10px] font-bold',
-                  annual ? 'bg-white/20 text-white' : 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300'
+                  'flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-semibold transition-colors',
+                  term === t.key ? 'bg-brand-600 text-white' : 'text-surface-500 hover:text-surface-700 dark:hover:text-surface-300'
                 )}
               >
-                -20%
-              </span>
-            </button>
+                {t.label}
+                {t.note && (
+                  <span
+                    className={cn(
+                      'rounded-full px-1.5 py-0.5 text-[10px] font-bold uppercase',
+                      term === t.key ? 'bg-white/20 text-white' : 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300'
+                    )}
+                  >
+                    {t.note}
+                  </span>
+                )}
+              </button>
+            ))}
           </div>
         </Reveal>
 
         <Stagger className="mt-12 grid items-start gap-6 lg:grid-cols-3">
           {pricingPlans.map((plan) => {
-            const price = annual ? Math.round(plan.price * 0.8) : plan.price
+            const price = plan.prices[term]
+            const saved = plan.prices.monthly - price
             return (
               <StaggerItem
                 key={plan.name}
@@ -89,7 +86,7 @@ export default function Pricing() {
                   <span className="text-sm text-surface-500">/month</span>
                 </div>
                 <p className="mt-1 h-4 text-xs text-emerald-600 dark:text-emerald-400">
-                  {annual ? `Billed annually (₹${price * 12}/yr)` : ''}
+                  {saved > 0 ? `Save ₹${saved}/mo vs monthly` : ''}
                 </p>
 
                 <Button
@@ -122,6 +119,32 @@ export default function Pricing() {
             </span>
           ))}
         </div>
+
+        {/* Early-adopter lifetime deal */}
+        <Reveal className="mt-12">
+          <div className="relative overflow-hidden rounded-2xl bg-surface-900 p-6 text-white shadow-glow dark:bg-surface-950 sm:p-8">
+            <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-brand-500/30 blur-3xl" />
+            <div className="relative flex flex-col items-start justify-between gap-5 sm:flex-row sm:items-center">
+              <div>
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-400/20 px-3 py-1 text-xs font-bold uppercase tracking-wide text-amber-300">
+                  🚀 {lifetimeDeal.badge}
+                </span>
+                <p className="mt-3 max-w-xl text-sm leading-relaxed text-surface-200">
+                  <span className="font-semibold text-white">{lifetimeDeal.limit}.</span> {lifetimeDeal.desc}
+                </p>
+              </div>
+              <div className="flex shrink-0 flex-col items-start gap-3 sm:items-end">
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl font-extrabold tracking-tight">₹{lifetimeDeal.price.toLocaleString('en-IN')}</span>
+                  <span className="text-sm text-surface-300">one-time</span>
+                </div>
+                <Button as={Link} to="/join" variant="white" size="sm">
+                  {lifetimeDeal.cta}
+                </Button>
+              </div>
+            </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   )

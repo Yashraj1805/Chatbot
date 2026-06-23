@@ -70,7 +70,6 @@ function AppRoutes() {
       <Route path="/join" element={<PilotSignup />} />
       <Route path="/login" element={<Navigate to="/join" replace />} />
       <Route path="/register" element={<Navigate to="/join" replace />} />
-      <Route path="/admin/login" element={<Navigate to="/join" replace />} />
 
       {/* Public content / footer pages */}
       <Route path="/features" element={<FeaturesPage />} />
@@ -97,13 +96,6 @@ function AppRoutes() {
       {/* Portals are not live yet. Any signed-in route (and old deep links)
           redirect to the pilot "coming soon" page. */}
       <Route path="/app/*" element={<Navigate to="/welcome" replace />} />
-      <Route path="/admin/dashboard" element={<Navigate to="/welcome" replace />} />
-      <Route path="/admin/customers" element={<Navigate to="/welcome" replace />} />
-      <Route path="/admin/subscriptions" element={<Navigate to="/welcome" replace />} />
-      <Route path="/admin/chatbots" element={<Navigate to="/welcome" replace />} />
-      <Route path="/admin/agents" element={<Navigate to="/welcome" replace />} />
-      <Route path="/admin/analytics" element={<Navigate to="/welcome" replace />} />
-      <Route path="/admin/settings" element={<Navigate to="/welcome" replace />} />
       <Route path="/agent/*" element={<Navigate to="/welcome" replace />} />
 
       <Route path="*" element={<NotFound />} />

@@ -10,7 +10,7 @@ const SYSTEM_PROMPT = `You are "VartaBot AI", the friendly assistant on VartaBot
 VartaBot is a no-code chatbot platform that lets businesses build chatbots and capture leads — live in minutes, no developer needed.
 
 Key facts (only state these if relevant, keep it accurate):
-- Plans: Starter ₹99/mo, Growth ₹599/mo (most popular), Scale ₹999/mo. Every plan has a 14-day free trial, no credit card needed. On Scale, the team sets up the bot for you.
+- Plans (per-month price, lower the longer you commit — Monthly/Quarterly/Half-Yearly/Yearly): "Powered By" from ₹399/mo (100 AI responses, website widget, "Powered by" branding); "Micro-Subscription" — best value — from ₹999/mo (1,000 responses, no branding, CSV export, priority email support); "Omnichannel" from ₹2,199/mo (5,000 responses, Web + WhatsApp, advanced funnels, analytics, API webhooks). There's also a one-time Early Adopter Lifetime Deal at ₹14,999 (first 50 customers, lifetime Omnichannel capped at 2,000 messages/mo).
 - Fully no-code: build rules visually, add the bot by pasting one line of code. Most go live in under 15 minutes.
 - Today it is rule-based (keywords, buttons, flows) — predictable and under the customer's control. AI conversation bots are on the roadmap.
 - Lead capture: automatically collects names, emails, phone numbers; view, filter, export, or send to a CRM via Zapier.
@@ -37,9 +37,42 @@ HOW TO ANSWER — keep it SHORT:
 - Warm and helpful, in the user's language (English or Hindi/Hinglish). End with a short nudge or question when natural.
 - Respond with only your final answer — no preamble, no reasoning out loud.`
 
+// Simple per-instance rate limit — generous enough to never bother a real
+// chatter (30 messages/min per IP), but stops scripted floods that would run up
+// the Claude bill. Resets on cold start; combined with the same-origin check
+// below it's solid protection for a pilot.
+const RATE_LIMIT = 30
+const RATE_WINDOW_MS = 60_000
+const hits = new Map()
+
+function rateLimited(ip) {
+  const now = Date.now()
+  const rec = hits.get(ip)
+  if (!rec || now - rec.ts > RATE_WINDOW_MS) {
+    hits.set(ip, { count: 1, ts: now })
+    if (hits.size > 5000) hits.clear() // guard against unbounded growth
+    return false
+  }
+  rec.count += 1
+  return rec.count > RATE_LIMIT
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ ok: false, error: 'Method not allowed' })
+  }
+
+  // Only serve same-origin browser requests (blocks casual off-site abuse).
+  const origin = req.headers.origin || ''
+  const host = req.headers.host || ''
+  if (origin && host && !origin.endsWith(host)) {
+    return res.status(403).json({ ok: false, error: 'Forbidden' })
+  }
+
+  // Generous per-IP rate limit.
+  const ip = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'unknown'
+  if (rateLimited(ip)) {
+    return res.status(429).json({ ok: false, error: 'Too many requests — please slow down a moment.' })
   }
 
   const apiKey = process.env.ANTHROPIC_API_KEY

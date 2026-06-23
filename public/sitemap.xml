@@ -4,7 +4,6 @@
   <url><loc>https://vartabot.in/features</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://vartabot.in/pricing</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://vartabot.in/about</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://vartabot.in/contact</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
   <url><loc>https://vartabot.in/roadmap</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
 
   <url><loc>https://vartabot.in/blog</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>

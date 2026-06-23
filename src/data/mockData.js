@@ -279,32 +279,49 @@ export const howItWorks = [
   { step: '03', icon: Code2, title: 'Embed & go live', description: 'Copy the embed snippet, paste it on your site, and start capturing leads.' },
 ]
 
+// Billing terms — price per month drops as you commit longer.
+export const billingTerms = [
+  { key: 'monthly', label: 'Monthly' },
+  { key: 'quarterly', label: 'Quarterly' },
+  { key: 'half', label: 'Half-Yearly' },
+  { key: 'yearly', label: 'Yearly', note: 'best value' },
+]
+
 export const pricingPlans = [
   {
-    name: 'Starter',
-    price: 99,
-    tagline: 'For solo founders & small sites',
-    features: ['1 chatbot', '50 rules', 'Unlimited conversations', 'Lead capture', 'Email support'],
+    name: 'Powered By',
+    tagline: 'Launch with zero software fees',
+    prices: { monthly: 699, quarterly: 599, half: 499, yearly: 399 },
+    features: ['100 AI responses / month', 'Website widget', 'Unlimited human seats', 'Basic lead capture', '“Powered by VartaBot” branding'],
     cta: 'Start free trial',
     highlighted: false,
   },
   {
-    name: 'Growth',
-    price: 599,
-    tagline: 'For growing teams',
-    features: ['5 chatbots', 'Unlimited rules', 'Unlimited conversations', '2 live agent seats', 'Lead capture + CSV export', 'Conversation analytics', 'Remove VartaBot badge', 'Priority support'],
+    name: 'Micro-Subscription',
+    tagline: 'Best value entry plan',
+    prices: { monthly: 1499, quarterly: 1299, half: 1199, yearly: 999 },
+    features: ['1,000 AI responses / month', 'No platform branding', 'Unlimited human seats', 'Clean CSV lead exports', 'Priority email support'],
     cta: 'Start free trial',
     highlighted: true,
   },
   {
-    name: 'Scale',
-    price: 999,
-    tagline: 'For high-traffic businesses',
-    features: ['Unlimited chatbots', 'Unlimited rules', 'Unlimited conversations', '10 live agent seats', 'CRM integration (export + sync)', 'Done-for-you AI chatbot setup by our team', 'Team roles & permissions', 'Dedicated success manager'],
-    cta: 'Contact sales',
+    name: 'Omnichannel',
+    tagline: 'Web + WhatsApp at scale',
+    prices: { monthly: 2999, quarterly: 2699, half: 2499, yearly: 2199 },
+    features: ['5,000 AI responses / month', 'Web + WhatsApp sync', 'Advanced qualification funnels', 'Visual dashboard analytics', 'API webhooks enabled'],
+    cta: 'Start free trial',
     highlighted: false,
   },
 ]
+
+// One-time early-adopter lifetime deal.
+export const lifetimeDeal = {
+  badge: 'Early Adopter Lifetime Deal',
+  price: 14999,
+  limit: 'Limited to the first 50 customers',
+  desc: 'Permanent, lifetime access to the Omnichannel plan (capped at 2,000 AI messages/month) — no recurring SaaS fees.',
+  cta: 'Grab the lifetime deal',
+}
 
 export const testimonials = [
   { name: 'Olivia Bennett', role: 'Head of Growth, BrightLabs', quote: 'We replaced our clunky help form with VartaBot and tripled qualified leads in a month. Setup took ten minutes.', avatar: 'OB' },

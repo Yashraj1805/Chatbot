@@ -140,7 +140,7 @@ export default function Roadmap() {
         </motion.div>
 
         <p className="container-page relative mt-10 text-center text-sm text-surface-500 dark:text-surface-400">
-          Got an idea? <Link to="/contact" className="font-semibold text-brand-600 dark:text-brand-400">Tell us what to build next →</Link>
+          Got an idea? <Link to="/join" className="font-semibold text-brand-600 dark:text-brand-400">Tell us what to build next →</Link>
         </p>
       </section>
     </PublicLayout>

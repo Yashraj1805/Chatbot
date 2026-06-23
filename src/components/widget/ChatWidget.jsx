@@ -274,7 +274,7 @@ function mockReply(text, history = []) {
 
   // 3. A short, on-brand line per intent — always ending by asking for the email.
   if (/(pric|cost|plan|how much|budget|₹|💰)/.test(t))
-    return 'Plans start at just ₹99/mo with a 14-day free trial. Share your work email and our team will reach out to get you started. ✉️'
+    return 'Plans start at just ₹399/mo, and there’s a one-time lifetime deal too. Share your work email and our team will reach out to get you started. ✉️'
   if (/(demo|book|call|schedule|meeting|📅)/.test(t))
     return 'Happy to set up a quick demo! Drop your work email and our team will reach out. ✉️'
   if (/(support|help|issue|problem|stuck|🛟)/.test(t))

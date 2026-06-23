@@ -6,26 +6,23 @@ import Reveal from '../../components/landing/Reveal.jsx'
 
 // Per-plan feature matrix — pricing-specific (distinct from the landing page).
 const matrix = [
-  { label: 'Chatbots', s: '1', g: '5', x: 'Unlimited' },
-  { label: 'Rules per bot', s: '50', g: 'Unlimited', x: 'Unlimited' },
-  { label: 'Conversations / month', s: 'Unlimited', g: 'Unlimited', x: 'Unlimited' },
-  { label: 'Live agent seats', s: '0', g: '2', x: '10' },
-  { label: 'Lead capture', s: true, g: true, x: true },
-  { label: 'Lead export (CSV)', s: false, g: true, x: true },
-  { label: 'CRM integration', s: false, g: false, x: true },
-  { label: 'Conversation analytics', s: false, g: true, x: true },
-  { label: 'Remove VartaBot badge', s: false, g: true, x: true },
-  { label: 'Done-for-you AI chatbot setup', s: false, g: false, x: true },
-  { label: 'Team roles & permissions', s: false, g: false, x: true },
-  { label: 'Dedicated success manager', s: false, g: false, x: true },
-  { label: 'Support', s: 'Email', g: 'Priority', x: 'Dedicated' },
+  { label: 'AI responses / month', s: '100', g: '1,000', x: '5,000' },
+  { label: 'Channels', s: 'Website', g: 'Website', x: 'Web + WhatsApp' },
+  { label: 'Human agent seats', s: 'Unlimited', g: 'Unlimited', x: 'Unlimited' },
+  { label: 'Lead capture', s: 'Basic', g: true, x: true },
+  { label: 'Clean CSV lead export', s: false, g: true, x: true },
+  { label: 'Remove platform branding', s: false, g: true, x: true },
+  { label: 'Advanced qualification funnels', s: false, g: false, x: true },
+  { label: 'Visual dashboard analytics', s: false, g: false, x: true },
+  { label: 'API webhooks', s: false, g: false, x: true },
+  { label: 'Priority support', s: false, g: true, x: true },
 ]
 
 const faqs = [
   { q: 'Is there a free trial?', a: 'Yes — every plan includes a 14-day free trial. No credit card required to start.' },
   { q: 'Can I change plans later?', a: 'Anytime. Upgrades and downgrades take effect immediately and are prorated automatically.' },
   { q: 'What counts as a conversation?', a: 'One chat session with a visitor counts as a single conversation, no matter how many messages it contains.' },
-  { q: 'Do you offer annual billing?', a: 'Yes — switch to annual on the pricing toggle and save 20% versus monthly.' },
+  { q: 'Do you offer longer-term plans?', a: 'Yes — pick Quarterly, Half-Yearly, or Yearly on the pricing toggle. The longer you commit, the lower your monthly price.' },
   { q: 'Do you offer refunds?', a: 'Every paid plan comes with a 30-day money-back guarantee, no questions asked.' },
   { q: 'Which payment methods do you accept?', a: 'All major credit and debit cards through our secure checkout.' },
 ]
@@ -40,7 +37,7 @@ export default function PricingPage() {
   return (
     <PublicLayout
       title="Pricing"
-      description="Simple, transparent VartaBot pricing — Starter, Growth, and Scale plans with a 14-day free trial. No credit card required."
+      description="Simple, transparent VartaBot pricing — Powered By, Micro-Subscription, and Omnichannel plans, plus a one-time lifetime deal. Commit longer, pay less."
     >
       <Pricing />
 
@@ -76,12 +73,12 @@ export default function PricingPage() {
           <Reveal className="overflow-hidden rounded-2xl border border-surface-200 bg-white shadow-card dark:border-surface-800 dark:bg-surface-900">
             <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] border-b border-surface-200 bg-surface-50 dark:border-surface-800 dark:bg-surface-950">
               <div className="px-4 py-4 text-sm font-semibold text-surface-500 sm:px-6">Feature</div>
-              <div className="px-2 py-4 text-center text-sm font-bold text-surface-900 dark:text-white">Starter</div>
+              <div className="px-2 py-4 text-center text-sm font-bold text-surface-900 dark:text-white">Powered By</div>
               <div className="relative px-2 py-4 text-center text-sm font-bold text-brand-700 dark:text-brand-300">
-                Growth
+                Micro-Subscription
                 <span className="ml-1 hidden rounded-full bg-brand-600 px-1.5 py-0.5 text-[10px] text-white sm:inline">Popular</span>
               </div>
-              <div className="px-2 py-4 text-center text-sm font-bold text-surface-900 dark:text-white">Scale</div>
+              <div className="px-2 py-4 text-center text-sm font-bold text-surface-900 dark:text-white">Omnichannel</div>
             </div>
             {matrix.map((row, i) => (
               <div
