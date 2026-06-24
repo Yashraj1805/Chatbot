@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import Button from '../ui/Button.jsx'
 import Logo from '../Logo.jsx'
@@ -27,7 +28,7 @@ export default function Navbar() {
     <header
       className={cn(
         'fixed inset-x-0 top-0 z-40 transition-all duration-300',
-        scrolled
+        scrolled || open
           ? 'border-b border-brand-300 bg-brand-200/95 shadow-sm backdrop-blur-lg dark:border-surface-800 dark:bg-surface-950/90'
           : 'border-b border-transparent'
       )}
@@ -67,45 +68,70 @@ export default function Navbar() {
         <div className="flex items-center gap-1 md:hidden">
           <button
             onClick={() => setOpen((o) => !o)}
-            className="rounded-lg p-2 text-surface-600 hover:bg-surface-100 dark:text-surface-300 dark:hover:bg-surface-800"
+            className="rounded-lg p-2 text-surface-700 hover:bg-white/50 dark:text-surface-300 dark:hover:bg-surface-800"
             aria-label="Toggle menu"
           >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={open ? 'x' : 'menu'}
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.15 }}
+                className="block"
+              >
+                {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </motion.span>
+            </AnimatePresence>
           </button>
         </div>
       </nav>
 
-      {open && (
-        <div className="border-t border-surface-200 bg-white px-4 py-4 dark:border-surface-800 dark:bg-surface-950 md:hidden">
-          <div className="flex flex-col gap-1">
-            {links.map((l) => (
-              <Link
-                key={l.label}
-                to={l.to}
-                onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-2.5 text-sm font-medium text-surface-600 hover:bg-surface-100 dark:text-surface-300 dark:hover:bg-surface-800"
-              >
-                {l.label}
-              </Link>
-            ))}
-            <Link
-              to="/about"
-              onClick={() => setOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-medium text-surface-600 hover:bg-surface-100 dark:text-surface-300 dark:hover:bg-surface-800"
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            key="mobile-menu"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden bg-gradient-to-b from-brand-200/95 to-white backdrop-blur-lg dark:from-surface-950/90 dark:to-surface-950 md:hidden"
+          >
+            <motion.div
+              className="flex flex-col gap-1 px-4 pb-5 pt-2"
+              initial="hidden"
+              animate="show"
+              variants={{ show: { transition: { staggerChildren: 0.05, delayChildren: 0.06 } } }}
             >
-              About
-            </Link>
-            <div className="mt-2 flex flex-col gap-2">
-              <Button as={Link} to="/#pricing" variant="secondary" onClick={() => setOpen(false)}>
-                Book a demo
-              </Button>
-              <Button as={Link} to="/join" onClick={() => setOpen(false)}>
-                Start free
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
+              {[...links, { label: 'About', to: '/about' }].map((l) => (
+                <motion.div
+                  key={l.label}
+                  variants={{ hidden: { opacity: 0, x: -12 }, show: { opacity: 1, x: 0 } }}
+                >
+                  <Link
+                    to={l.to}
+                    onClick={() => setOpen(false)}
+                    className="block rounded-lg px-3 py-2.5 text-sm font-medium text-surface-700 transition-colors hover:bg-white/70 hover:text-brand-700 dark:text-surface-200 dark:hover:bg-surface-800"
+                  >
+                    {l.label}
+                  </Link>
+                </motion.div>
+              ))}
+              <motion.div
+                variants={{ hidden: { opacity: 0, x: -12 }, show: { opacity: 1, x: 0 } }}
+                className="mt-3 flex flex-col gap-2"
+              >
+                <Button as={Link} to="/#pricing" variant="secondary" onClick={() => setOpen(false)}>
+                  Book a demo
+                </Button>
+                <Button as={Link} to="/join" onClick={() => setOpen(false)}>
+                  Start free
+                </Button>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   )
 }
