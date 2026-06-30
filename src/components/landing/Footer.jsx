@@ -9,6 +9,7 @@ const columns = [
     title: 'Product',
     links: [
       { label: 'Features', to: '/features' },
+      { label: 'Rule-based chatbot', to: '/rule-based-chatbot' },
       { label: 'Pricing', to: '/pricing' },
       { label: 'Integrations', to: '/#integrations' },
       { label: 'Roadmap', to: '/roadmap' },

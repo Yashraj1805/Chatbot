@@ -4,7 +4,10 @@ import PublicLayout from '../../components/layout/PublicLayout.jsx'
 import Reveal from '../../components/landing/Reveal.jsx'
 import Button from '../../components/ui/Button.jsx'
 import BlogCover from '../../components/BlogCover.jsx'
+import JsonLd from '../../components/JsonLd.jsx'
 import { blogPosts, postBySlug, formatDate } from '../../data/blogPosts.js'
+
+const BASE = 'https://vartabot.in'
 
 export default function BlogPost() {
   const { slug } = useParams()
@@ -13,8 +16,38 @@ export default function BlogPost() {
 
   const related = blogPosts.filter((p) => p.slug !== slug).slice(0, 3)
 
+  const url = `${BASE}/blog/${post.slug}`
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.date,
+    dateModified: post.date,
+    author: { '@type': 'Person', name: post.author },
+    publisher: {
+      '@type': 'Organization',
+      name: 'VartaBot',
+      logo: { '@type': 'ImageObject', url: `${BASE}/favicon-logo.png` },
+    },
+    image: `${BASE}/og-image.png`,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    articleSection: post.category,
+  }
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: BASE },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: `${BASE}/blog` },
+      { '@type': 'ListItem', position: 3, name: post.title, item: url },
+    ],
+  }
+
   return (
     <PublicLayout title={post.title} description={post.excerpt}>
+      <JsonLd id="article-schema" data={articleSchema} />
+      <JsonLd id="breadcrumb-schema" data={breadcrumbSchema} />
       <article className="py-12 sm:py-16">
         <div className="container-page max-w-3xl">
           <Link to="/blog" className="inline-flex items-center gap-1.5 text-sm font-medium text-surface-500 hover:text-brand-600 dark:text-surface-400">

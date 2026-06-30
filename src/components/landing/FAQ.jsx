@@ -4,14 +4,27 @@ import { ChevronDown, MessageCircleQuestion } from 'lucide-react'
 import { faqs } from '../../data/mockData.js'
 import Reveal from './Reveal.jsx'
 import Button from '../ui/Button.jsx'
+import JsonLd from '../JsonLd.jsx'
 import { Stagger, StaggerItem } from '../motion/index.jsx'
 import { cn } from '../../utils/cn.js'
+
+// FAQPage structured data → eligible for Google's expandable FAQ rich results.
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+}
 
 export default function FAQ() {
   const [open, setOpen] = useState(0)
 
   return (
     <section id="faq" className="scroll-mt-20 py-12 sm:py-16">
+      <JsonLd id="faq-schema" data={faqSchema} />
       <div className="container-page grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
         {/* Left — heading + support */}
         <Reveal className="lg:sticky lg:top-24 lg:self-start">

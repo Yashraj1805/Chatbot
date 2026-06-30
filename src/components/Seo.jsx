@@ -6,8 +6,9 @@ import { useLocation } from 'react-router-dom'
 // is derived automatically from the current path.
 const SITE = 'VartaBot'
 const BASE = 'https://vartabot.in'
+const DEFAULT_TITLE = 'VartaBot — No-Code Rule-Based Chatbot Builder'
 const DEFAULT_DESC =
-  'VartaBot — build no-code chatbots that capture leads and answer visitors 24/7. Live in minutes, no developer needed.'
+  'Build a no-code, rule-based chatbot that captures leads and answers visitors 24/7. VartaBot lets you create keyword, button and flow-based chatbots and embed them on any website in minutes — no developer needed.'
 const DEFAULT_IMAGE = '/og-image.png'
 
 function upsertMeta(attr, key, content) {
@@ -32,7 +33,7 @@ function upsertLink(rel, href) {
 
 export default function Seo({ title, description = DEFAULT_DESC, image = DEFAULT_IMAGE, noindex = false }) {
   const { pathname } = useLocation()
-  const fullTitle = title ? `${title} · ${SITE}` : `${SITE} — No-Code Chatbot Platform`
+  const fullTitle = title ? `${title} · ${SITE}` : DEFAULT_TITLE
   const url = BASE + pathname
   const img = image.startsWith('http') ? image : BASE + image
 

@@ -18,6 +18,7 @@ const NotFound = lazy(() => import('./pages/NotFound.jsx'))
 // Public content / footer pages
 const PricingPage = lazy(() => import('./pages/public/PricingPage.jsx'))
 const FeaturesPage = lazy(() => import('./pages/public/FeaturesPage.jsx'))
+const RuleBasedChatbot = lazy(() => import('./pages/public/RuleBasedChatbot.jsx'))
 const Blog = lazy(() => import('./pages/public/Blog.jsx'))
 const BlogPost = lazy(() => import('./pages/public/BlogPost.jsx'))
 const Roadmap = lazy(() => import('./pages/public/Roadmap.jsx'))
@@ -73,6 +74,7 @@ function AppRoutes() {
 
       {/* Public content / footer pages */}
       <Route path="/features" element={<FeaturesPage />} />
+      <Route path="/rule-based-chatbot" element={<RuleBasedChatbot />} />
       <Route path="/pricing" element={<PricingPage />} />
       <Route path="/contact" element={<Navigate to="/join" replace />} />
       <Route path="/blog" element={<Blog />} />
