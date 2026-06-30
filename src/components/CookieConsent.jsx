@@ -2,41 +2,21 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Cookie } from 'lucide-react'
 import Button from './ui/Button.jsx'
+import { getConsent, setConsent } from '../lib/consent.js'
 
-// Stores the visitor's cookie choice so we only ask once.
-//   'accepted' → essential + optional analytics cookies
-//   'essential' → essential cookies only
-const KEY = 'vartabot-cookie-consent'
-
-// Call this before loading any OPTIONAL analytics/tracking so we honour consent.
-// (No analytics ship today; this is the gate for when they do — see Cookie Policy.)
-export function hasAnalyticsConsent() {
-  try {
-    return localStorage.getItem(KEY) === 'accepted'
-  } catch {
-    return false
-  }
-}
+// Re-exported for convenience; the real implementation lives in lib/consent.js.
+export { hasAnalyticsConsent } from '../lib/consent.js'
 
 export default function CookieConsent() {
   const [show, setShow] = useState(false)
 
   useEffect(() => {
-    try {
-      if (!localStorage.getItem(KEY)) setShow(true)
-    } catch {
-      /* storage blocked — don't nag */
-    }
+    if (!getConsent()) setShow(true)
   }, [])
 
   const choose = (value) => {
-    try {
-      localStorage.setItem(KEY, value)
-    } catch {
-      /* ignore */
-    }
+    setConsent(value) // persists + notifies AnalyticsGate to (un)load analytics
     setShow(false)
-    // When analytics is added, enable it here only if value === 'accepted'.
   }
 
   if (!show) return null

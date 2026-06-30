@@ -8,7 +8,7 @@ const SITE = 'VartaBot'
 const BASE = 'https://vartabot.in'
 const DEFAULT_DESC =
   'VartaBot — build no-code chatbots that capture leads and answer visitors 24/7. Live in minutes, no developer needed.'
-const DEFAULT_IMAGE = '/og-image.svg'
+const DEFAULT_IMAGE = '/og-image.png'
 
 function upsertMeta(attr, key, content) {
   let el = document.head.querySelector(`meta[${attr}="${key}"]`)
