@@ -2,6 +2,7 @@ import Navbar from '../landing/Navbar.jsx'
 import Footer from '../landing/Footer.jsx'
 import Ambience from '../landing/Ambience.jsx'
 import AIAssistant from '../AIAssistant.jsx'
+import CookieConsent from '../CookieConsent.jsx'
 import Seo from '../Seo.jsx'
 
 // Shared shell for all public (pre-login) pages: nav, footer, ambient depth,
@@ -15,6 +16,7 @@ export default function PublicLayout({ children, title, description, noindex }) 
       <main className="relative z-10 pt-16">{children}</main>
       <Footer />
       <AIAssistant />
+      <CookieConsent />
     </div>
   )
 }

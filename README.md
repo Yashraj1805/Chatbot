@@ -1,175 +1,186 @@
-# BotForge — No-Code Chatbot SaaS (Frontend)
+# VartaBot — No-Code Chatbot Platform
 
-A premium, multi-tenant SaaS frontend for building, managing, and deploying
-**rule-based** chatbots — no code required. Built with **React + Vite + Tailwind CSS**.
+A premium marketing site + multi-portal SaaS frontend for **VartaBot**, a no-code,
+**rule-based** chatbot platform that lets businesses build chatbots and capture leads —
+live in minutes, no developer needed. Built with **React 18 + Vite 5 + Tailwind CSS 3**,
+deployed on **Vercel**.
 
-It ships **three separate portals** sharing one design system:
+> ### 🚦 Current phase: public pilot
+> Only the **public marketing site** is routed right now. The three internal portals
+> (Customer / Super Admin / Live Agent) are fully built in `src/` but **intentionally
+> not wired into the router yet** — every signed-in route redirects to a pilot
+> **"You're in"** page. Visitors join the pilot by leaving their email at `/join`.
+> See [`src/App.jsx`](src/App.jsx) for the live route table.
 
-| Portal | Path | For |
-| --- | --- | --- |
-| 🛡️ **Super Admin** | `/admin` | Platform owner — customers, subscriptions, monitoring, analytics |
-| 🤖 **Customer** | `/app` | Businesses — chatbots, rules, leads, agents, install |
-| 🎧 **Live Agent** | `/agent` | Support agents — live inbox, transfers, performance |
-
-Use the **portal switcher** in the top bar (or the role selector on the login page)
-to jump between them — there's no real auth, so all three are open in the demo.
-
-> ⚠️ **Frontend only.** There is no backend, API, database, or real auth. Everything
-> runs on mock data in [`src/data/mockData.js`](src/data/mockData.js). This is the
-> Phase 1 UI/UX deliverable, architected so a real backend can slot in later.
+The site also ships **two real Vercel serverless functions** (in [`api/`](api/)) — an
+"Ask AI" assistant powered by Claude, and a pilot-signup capture that writes to Postgres.
+Everything inside the portals still runs on mock data ([`src/data/`](src/data/)).
 
 ---
 
-## ✨ What's included
+## ✨ What's live today
 
-| Area | Pages / Components |
+| Area | Pages |
 | --- | --- |
-| **Marketing** | Landing page — Hero, Features, How it works, Pricing, Testimonials, FAQ, CTA, Footer |
-| **Auth** | Login, Register (two-pane branded layout) |
-| **App** | Dashboard, Chatbots list, Create chatbot, Rules, Conversations, Leads, Widget install, Settings |
-| **Widget** | Fully interactive floating chat widget preview (mock rule engine) |
-| **System** | Dark mode, responsive layouts, loading/empty states, modals, toasts-ready UI kit |
+| **Landing** | Hero · Product showcase · Stats · Features · How it works · Integrations · Pricing · Comparison · FAQ · CTA · Footer |
+| **Marketing** | Features, Pricing, About, Roadmap |
+| **Resources** | Blog + posts, Docs + articles, Help center, Community, API reference, Status |
+| **Legal** | Privacy, Terms, Security, GDPR, Cookies |
+| **Pilot** | `/join` email capture → `/welcome` confirmation ("Coming soon") |
+| **AI** | Floating "Ask AI" assistant on public pages (Claude-backed serverless API) |
 
-### Design system
-- **Brand palette** (indigo/violet) + neutral surface scale, defined in [`tailwind.config.js`](tailwind.config.js)
-- **Dark mode** via `class` strategy with no-flash hydration (see [`index.html`](index.html))
-- Reusable UI kit in [`src/components/ui/`](src/components/ui/): `Button`, `Card`, `Badge`,
-  `Input`, `Modal`, `Avatar`, `Toggle`, `Spinner`, `EmptyState`, `StatCard`, `PageHeader`
+### Built but dormant (not routed during the pilot)
+Customer portal (`/app`), Super Admin portal (`/admin`), Live Agent portal (`/agent`),
+and the visual **flow builder** — all complete in `src/pages/` and `src/components/`, ready
+to be re-enabled in a later phase.
 
 ---
 
 ## 🚀 Getting started
 
-> **Prerequisite:** [Node.js](https://nodejs.org/) **18+** and npm. This machine did
-> not have Node installed when the project was generated — install it first, then:
+> **Prerequisite:** [Node.js](https://nodejs.org/) **18+** and npm.
 
 ```bash
-# 1. Install dependencies
-npm install
-
-# 2. Start the dev server (opens http://localhost:5173)
-npm run dev
-
-# 3. Build for production
-npm run build
-
-# 4. Preview the production build
-npm run preview
+npm install      # install dependencies
+npm run dev      # dev server → http://localhost:5173 (opens automatically)
+npm run build    # production build → /dist
+npm run preview  # preview the production build
 ```
+
+> The `api/` serverless functions **don't run** under `npm run dev`. To exercise them
+> locally, use `vercel dev`. Without them the pilot form fails quietly and the UI still
+> proceeds.
 
 ---
 
-## 🗺️ Routes
+## 🔑 Environment variables
 
-**Public**
+Server-side only (never exposed to the browser). Set in Vercel → Settings → Environment
+Variables, or copy [`.env.example`](.env.example) → `.env` for `vercel dev`.
 
-| Path | Page |
-| --- | --- |
-| `/` | Landing page |
-| `/login` | Login (with portal selector) |
-| `/register` | Register |
+| Var | Used by | Required |
+| --- | --- | --- |
+| `DATABASE_URL` | `api/lead.js` — Postgres (Neon/Supabase/Railway) to store signups | To persist signups |
+| `RESEND_API_KEY` | `api/lead.js` — email alert on each signup | Optional |
+| `NOTIFY_EMAIL` | `api/lead.js` — where the alert goes | Optional |
+| `NOTIFY_FROM` | `api/lead.js` — from address (default `onboarding@resend.dev`) | Optional |
+| `ANTHROPIC_API_KEY` | `api/assistant.js` — Claude API key for the "Ask AI" assistant | For live AI answers |
+| `ANTHROPIC_MODEL` | `api/assistant.js` — model id (default `claude-haiku-4-5`) | Optional |
 
-**Customer portal** (`/app`)
+---
 
-| Path | Page |
-| --- | --- |
-| `/app/dashboard` | Dashboard (stats, activity, chart) |
-| `/app/chatbots` | Chatbot list (search, filter, clone, enable/disable, delete) |
-| `/app/chatbots/new` | Create chatbot (with live widget preview) |
-| `/app/flow` | **Visual flow builder** — drag-and-drop chatbot workflow editor |
-| `/app/rules` | Rule builder (trigger/response/category/status) |
-| `/app/conversations` | Conversation history (master–detail transcript) |
-| `/app/leads` | Captured leads (search, filter, export UI) |
-| `/app/agents` | Live agents (add / remove / assign) |
-| `/app/analytics` | Conversations, leads, response rate, transfers |
-| `/app/install` | Widget installation (embed code + copy + preview) |
-| `/app/settings` | Profile · Workspace · Notifications · Billing |
+## 🗺️ Routes (live)
 
-**Super Admin portal** (`/admin`)
+**Public marketing**
 
 | Path | Page |
 | --- | --- |
-| `/admin/dashboard` | Platform KPIs, revenue, health watch |
-| `/admin/customers` | Customer list + detail (activate/suspend/deactivate) |
-| `/admin/subscriptions` | Plans, pricing, billing overview, upgrade/downgrade |
-| `/admin/chatbots` | Platform-wide chatbot health monitoring |
-| `/admin/agents` | Agent availability & performance |
-| `/admin/analytics` | Daily conversations, monthly leads, revenue, plans |
-| `/admin/settings` | Platform · Branding · Notifications |
+| `/` | Landing |
+| `/about` | About / company |
+| `/features` | Features |
+| `/pricing` | Pricing |
+| `/blog`, `/blog/:slug` | Blog index + post |
+| `/roadmap` | Product roadmap |
+| `/docs`, `/docs/:slug` | Docs hub + article |
+| `/help` | Help center |
+| `/community` | Community |
+| `/api` | API reference |
+| `/status` | System status |
+| `/privacy`, `/terms`, `/security`, `/gdpr`, `/cookies` | Legal pages |
 
-**Live Agent portal** (`/agent`)
+**Pilot funnel**
 
-| Path | Page |
+| Path | Behaviour |
 | --- | --- |
-| `/agent/dashboard` | Assigned / active / closed chats, queue |
-| `/agent/inbox` | Live inbox: chat list · message window · customer & lead panel · quick responses · transfer / escalate / close |
-| `/agent/performance` | Chats handled, resolution rate, CSAT |
-| `/agent/profile` | Profile · Password · Notifications · Availability |
+| `/join` | Pilot signup (email capture → posts to `/api/lead`) |
+| `/welcome` | Post-signup "You're in 🎉" page |
+| `/login`, `/register`, `/contact` | Redirect → `/join` |
+| `/app/*`, `/agent/*` | Redirect → `/welcome` (portals dormant) |
+| `*` | Styled 404 |
 
-Any unknown route renders a styled **404** page.
+---
 
-> Auth is mocked: pick a portal on the login page (or use the top-bar **portal
-> switcher**) to enter any of the three.
+## 🎨 Design system
+
+- **Brand:** deep navy `brand-600 = #284b7d` + warm orange `accent-400 = #e9853d`, on a
+  cool **surface** slate scale — defined in [`tailwind.config.js`](tailwind.config.js).
+- **Fonts:** **Outfit** (display/headings) + **Plus Jakarta Sans** (body), via Google Fonts
+  in [`index.html`](index.html).
+- **Theme:** **light only.** `ThemeContext` strips the `dark` class on mount, so `dark:`
+  utilities are inert and there's no theme persistence. (Dark styles still exist in the
+  markup for a future re-enable.)
+- **UI kit** in [`src/components/ui/`](src/components/ui/): `Button`, `Card`, `Badge`,
+  `Input`, `Modal`, `Avatar`, `Toggle`, `Spinner`, `EmptyState`, `StatCard`, `PageHeader`,
+  `Charts` (dependency-free SVG).
+- **SEO:** [`src/components/Seo.jsx`](src/components/Seo.jsx) is a dependency-free
+  `document.title`/meta manager; base URL `https://vartabot.in`. Plus a sitemap, robots.txt,
+  and JSON-LD in `index.html`.
+
+---
+
+## 🧰 Tech stack
+
+- **React 18** + **Vite 5** (vendor chunk-splitting for Core Web Vitals)
+- **Tailwind CSS 3** (custom brand theme; dark mode disabled)
+- **React Router 6**
+- **Framer Motion** — animation
+- **React Flow** (`@xyflow/react`) — the (dormant) visual flow builder
+- **lucide-react** icons
+- **Vercel serverless** (`api/`) — `pg` for Postgres, Claude Messages API, Resend (optional)
 
 ---
 
 ## 📁 Project structure
 
 ```
-src/
-├── main.jsx                # App entry — Router + ThemeProvider
-├── App.jsx                 # Route definitions
-├── index.css               # Tailwind layers + base styles
-├── context/
-│   └── ThemeContext.jsx    # Light/dark theme provider
-├── data/
-│   └── mockData.js         # ALL sample data lives here
-├── utils/
-│   └── cn.js               # classname helper
-├── components/
-│   ├── ui/                 # Reusable design-system primitives
-│   ├── layout/             # DashboardLayout, Sidebar, Topbar, AuthLayout, ThemeToggle
-│   ├── landing/            # Marketing page sections
-│   └── widget/
-│       └── ChatWidget.jsx  # Floating + inline chat widget
-└── pages/                  # One file per route
+Chatbot/
+├── api/                       # Vercel serverless functions
+│   ├── assistant.js           # "Ask AI" — Claude Messages API (key stays server-side)
+│   └── lead.js                # pilot signup → Postgres + optional Resend email
+├── public/                    # favicon, og-image, robots.txt, sitemap.xml, logo lab pages
+├── logo-assets/               # source logo marks
+├── index.html                 # shell, fonts, theme-color, JSON-LD
+├── tailwind.config.js          # brand/accent/surface palettes, fonts, animations
+├── vite.config.js              # React plugin + manual vendor chunking
+├── vercel.json                 # Vite framework + SPA rewrites
+└── src/
+    ├── main.jsx                # BrowserRouter → ThemeProvider → ChatbotsProvider → App
+    ├── App.jsx                 # live routes (portals redirect to /welcome)
+    ├── index.css               # Tailwind layers + utilities (.container-page, .glass, .aurora…)
+    ├── lib/waitlist.js         # posts pilot signups to /api/lead
+    ├── context/                # ThemeContext (light-only), ChatbotsContext (localStorage)
+    ├── config/portals.js       # the 3 portals (nav/identity/paths) — used when re-enabled
+    ├── data/                   # mockData, portalData, flowNodes, blogPosts, docsContent
+    ├── components/
+    │   ├── ui/                 # design-system primitives
+    │   ├── layout/             # PublicLayout, PortalLayout, Sidebar, Topbar, AuthLayout, ThemeToggle
+    │   ├── landing/            # marketing sections (Hero, Features, Pricing, FAQ, Footer…)
+    │   ├── flow/               # the visual flow builder (dormant)
+    │   ├── widget/ChatWidget.jsx
+    │   ├── AIAssistant.jsx     # floating "Ask AI" widget
+    │   ├── Logo.jsx · Seo.jsx · PageHero.jsx · BlogCover.jsx · Typewriter.jsx · ScrollManager.jsx
+    │   └── motion/index.jsx    # CountUp + motion helpers
+    └── pages/                  # one file per route (+ admin/ and agent/ subfolders, dormant)
 ```
 
----
-
-## 🔌 Wiring up a real backend (later phases)
-
-The UI is intentionally decoupled from data. To make it real:
-
-1. Replace imports from `src/data/mockData.js` with API calls (e.g. React Query / fetch).
-2. Add an auth layer and a `<ProtectedRoute>` wrapper around the `/app` routes in `App.jsx`.
-3. Persist chatbot/rule/lead mutations (currently held in local component state).
-4. Implement the real widget loader behind the embed snippet in the install page.
+For the full deep-dive — portals, flow builder, data layer, API contract — see
+[DOCUMENTATION.md](DOCUMENTATION.md).
 
 ---
 
-## 🔀 Visual flow builder
+## 💸 Pricing (INR)
 
-The customer portal includes a drag-and-drop chatbot **flow builder** (`/app/flow`,
-or "Edit flow" on any chatbot) built on [React Flow](https://reactflow.dev/). Drag
-blocks from the palette onto the canvas, connect them, and edit each block in the
-properties panel. Blocks are grouped into three categories:
+Prices drop the longer you commit (Monthly → Quarterly → Half-Yearly → Yearly).
 
-- **Messages** — Send a message · Ask a question (saves to a variable) · Set a condition (branches Yes/No)
-- **Operations** — AI Assist (Beta) · Subscribe · Unsubscribe · Update Attribute · Set tags · Assign Team · Assign User · Trigger Chatbot · Update Chat Status · Template · Time Delay · WhatsApp Flows
-- **Integrations** — Webhook · Google Spreadsheet · Catalog · Sets · Product
+| Plan | From (yearly) | Monthly | Notes |
+| --- | --- | --- | --- |
+| **Powered By** | ₹399/mo | ₹699/mo | 100 AI responses, "Powered by" branding |
+| **Micro-Subscription** ⭐ | ₹999/mo | ₹1,499/mo | Best value — 1,000 responses, no branding, CSV export |
+| **Omnichannel** | ₹2,199/mo | ₹2,999/mo | 5,000 responses, Web + WhatsApp, analytics, webhooks |
 
-The whole node set lives in [`src/data/flowNodes.js`](src/data/flowNodes.js) — each
-block declares its icon, color, default data, and which fields appear in the panel,
-so adding a new block type is a single object. The builder is lazy-loaded so React
-Flow never ships in the main bundle.
+Plus a one-time **Early Adopter Lifetime Deal — ₹14,999** (first 50 customers; lifetime
+Omnichannel capped at 2,000 messages/mo). Edit in [`src/data/mockData.js`](src/data/mockData.js).
 
-## 🧰 Tech stack
-
-- **React 18** + **Vite 5**
-- **Tailwind CSS 3** (dark mode, custom theme)
-- **React Router 6**
-- **React Flow** (`@xyflow/react`) — visual flow builder
-- **lucide-react** icons
+---
 
 Built to feel like a real, commercial SaaS product. 🛠️

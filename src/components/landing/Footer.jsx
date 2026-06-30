@@ -151,9 +151,6 @@ export default function Footer() {
           <p className="text-sm text-surface-500 dark:text-surface-400">
             © 2026 VartaBot, Inc. All rights reserved.
           </p>
-          <p className="text-sm text-surface-500 dark:text-surface-400">
-            Made for teams who hate writing code.
-          </p>
         </div>
       </div>
     </footer>
