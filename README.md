@@ -183,4 +183,34 @@ Omnichannel capped at 2,000 messages/mo). Edit in [`src/data/mockData.js`](src/d
 
 ---
 
+## ✅ What still needs doing (before / after launch)
+
+Tracked here so nothing slips. Items marked **(you)** need decisions/access only the
+owner has — they can't be done from code.
+
+### ⚖️ Legal — needs review before public launch
+- [ ] **(you)** Have a lawyer review all copy in [`src/pages/public/legalContent.js`](src/pages/public/legalContent.js).
+- [ ] **(you)** Fill the 3 hidden `draft: true` sections, then remove the flag to publish them:
+  **Grievance officer** (name/email/address — required by India's DPDP Act), **Cancellations & refunds** (refund window + processing time), **Governing law & disputes** (jurisdiction).
+- [ ] **(you)** Confirm the legal entity ("VartaBot, Inc." in the footer) and jurisdiction; add DPDP-specific clauses if operating in India.
+- [ ] **(you)** Verify the mailboxes referenced actually exist: `privacy@`, `security@`, `legal@`, `support@`, `grievance@`, `hello@` `vartabot.in`.
+
+### 📈 Analytics & consent
+- [ ] **(you)** Enable **Web Analytics** in the Vercel dashboard (Project → Analytics) so the consent-gated `<AnalyticsGate>` actually receives data.
+- [ ] *(optional)* Add a "Manage cookies" footer link that re-opens the consent banner / lets visitors withdraw consent.
+
+### 🔍 SEO
+- [ ] **(you)** Set up **Google Search Console**, verify the domain, and submit `https://vartabot.in/sitemap.xml`.
+- [ ] **(you)** Off-page: backlinks (directories, Product Hunt, guest posts) + a regular blog cadence — the real levers for competitive keywords.
+- [ ] **Pre-rendering / SSG** (biggest technical lever): the site is a client-side SPA, so non-Google crawlers and social scrapers only see the global `index.html` meta. Pre-rendering each route to static HTML gives every page its own OG/meta and faster indexing. *(Not yet done — changes the build.)*
+- [ ] **(you)** After each deploy, re-check social previews with the Facebook/LinkedIn/Twitter debuggers (OG image is now a real PNG at `/og-image.png`).
+
+### 🎨 Content accuracy (before making public claims)
+- [ ] **(you)** Replace fictional social proof with real data: `testimonials`, `trustLogos`, `brandStats`, and the `4.9/5 · 1200 ratings` in the `index.html` JSON-LD.
+
+### 🚪 Portals (later phase)
+- [ ] Re-route `/app`, `/admin`, `/agent` (currently redirect to `/welcome`) and add real auth + a `<ProtectedRoute>` when the backend is ready — see [DOCUMENTATION.md §2](DOCUMENTATION.md).
+
+---
+
 Built to feel like a real, commercial SaaS product. 🛠️
